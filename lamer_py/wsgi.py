@@ -12,7 +12,7 @@ import sys
 from django.core.wsgi import get_wsgi_application
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "lamer_py.settings")
-
-sys.path.insert(0,PROJECT_DIR)
 PROJECT_DIR = dirname(dirname(abspath(__file__)))
+sys.path.insert(0,PROJECT_DIR)
+
 application = get_wsgi_application()
