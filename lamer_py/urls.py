@@ -22,7 +22,7 @@ import os
 
 
 urlpatterns = [
-    path('/', views.index),
+    path('', views.index),
     path('admin/', admin.site.urls),
     path('index/', views.index),
     path('login/', views.login1),
