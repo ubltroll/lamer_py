@@ -1,0 +1,209 @@
+ <!-- FlatFy Theme - Andrea Galanti /-->
+<!doctype html>
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
+<!--[if IE 9]>    <html class="no-js ie9" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!--> <html> <!--<![endif]-->
+
+
+<body id="home">
+
+	<!-- Preloader -->
+	<div id="preloader">
+		<div id="status"></div>
+	</div>
+	
+    
+	
+	<div id='head'></div>
+
+	
+
+	<!--先做一个假的找回密码页面 -->
+	
+	
+
+
+	
+	
+	<div  class="content-section-b " style="background-color: #f8f8f8">
+		<div class="container">
+			<div class="col-md-6 col-md-offset-3 text-center wrap_title">
+				<h2 style="font-size: 36px">找回密码</h2>
+				<p class="lead" style="margin-top:0">Find My Password</p>
+                <p class="lead" style="margin-top:0">请用注册时绑定的手机接收验证码</p>
+			 </div>
+			<form role="form" action="" onsubmit="" method="post" name="loginForm">
+				<div class="col-md-6 col-md-offset-3">
+					<div class="form-group ">
+						<label for="UserName">用户名</label>
+						
+						<div class="input-group col-sm-12">
+							<input type="text" class="form-control" name="Username" id="UserName" placeholder="输入用户名" required>
+						
+						</div>
+					</div>
+					
+					
+					
+					<div class="form-group">
+                        <label for="sms">验证码</label>
+                        <div class="form-inline row">
+                        
+                            <div class="form-group col-sm-6">
+                        
+                                <input type="text" class="form-control " id="sms" name="sms" placeholder="接收到的短信验证码" required data-bv-notempty-message="请输入验证码">
+                            
+                            </div>
+                            <div class="form-group col-md-3 col-md-offset-3">
+                                <button  id='getSMS' type="button" class="wow tada btn btn-info" onclick='getSMSfuc()' >获取验证码</button>
+                            </div> 
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Password">新密码</label>
+                       
+                        <div class="input-group  col-sm-12">
+                            <input type="password" class="form-control" id="Password" name="Password" placeholder="输入新的密码" required disabled>
+                         
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="ConfirmPassword">确认密码</label>                           
+                    
+                        <div class="input-group  col-sm-12">
+                            <input type="password" class="form-control" id="ConfirmPassword" name="ConfirmPassword" placeholder="确认密码" required disabled>
+                          
+                        </div>
+                    </div>
+					
+
+					<input type="submit" name="submit" id="submit" value="修改密码" class="btn wow tada btn-embossed btn-primary pull-right">
+				</div>
+			</form>
+			
+		</div>
+	</div>	
+
+	<div id='footer'></div>
+	
+	
+	
+
+
+    <!-- JavaScript -->
+    <script src="/static/js/jquery-1.10.2.js"></script>
+    <script src="/static/js/bootstrap.js"></script>
+    <script src="/static/js/owl.carousel.js"></script>
+    <script src="/static/js/stickUp.min.js"></script>
+    <script src="/static/js/script.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap-validator/0.5.3/js/bootstrapValidator.min.js"></script>
+    <script>
+        function getSMSfuc(){
+            $("#Password").removeAttr('disabled')
+            $("#ConfirmPassword").removeAttr('disabled')
+        }
+        $(function(){  
+          	$('#head').load('/static/head.html', function() {
+              FlatfyInit();
+              $('.navbar-default').stickUp();
+            });
+          	$('#footer').load('/static/footer.html') 
+          /*  $("#UserName").change(function(){checkuser();});  
+            $("#Password").change(function(){checkpd();});  
+            //$("#Phone").change(function(){checkphone();}); 
+            $("#ConfirmPassword").change(function(){confirmpwd();});   
+            $("#sms").change(function(){checksms();}); 
+            //$("#Salesman").change(function(){checksman();});   
+            //提交按钮事件，false:不能提交，抑制提交按钮  */
+            $('form').bootstrapValidator({
+    　　　　　　　　message: '该字段不能为空',
+                    fields:{
+                        Username: {
+                             message:'用户名无效',
+                             validators: {
+                                 notEmpty: {
+                                     message: '用户名不能为空'
+                                 },
+                                 stringLength: {
+                                     min: 6,
+                                     max: 12,
+                                     message: '用户名长度必须在6-12位之间'
+                                 },
+                                 regexp: {
+                                     regexp: /^[a-zA-Z0-9_\.]+$/,
+                                     message: '用户名只能用字母和数字组成'
+                                 },
+                                 threshold :  6 ,
+                             }
+                         },
+                    }
+            });
+            $("#submit").click(function(){  
+                if(checkuser() && checkpd()  &&confirmpwd()
+                	//&& checksman()
+              		 && checkphone() &&checksms()){  
+                    //信息填写完整
+
+                //先做假的找回密码，这个功能什么都没有
+                //TODO submit through ajax
+                	return true;
+                }
+                else{
+                	return false;  
+                }  
+                
+            }); 
+            
+        });
+	</script>
+
+
+	
+
+	<!-- Smoothscroll -->
+
+	<script src="/static/js/wow.min.js"></script>
+	<script>
+	 new WOW().init();
+	</script>
+	<script src="/static/js/classie.js"></script>
+	<!-- Magnific Popup core JS file -->
+	<script src="/static/js/jquery.magnific-popup.js"></script> 
+
+	<script type="text/javascript">
+
+		function checkLogin(){  
+            if(checkUsername() && checkPassword()){  
+                 alert("请输入密码")
+                 return true;  
+             }          
+            return false;  
+        }  
+        //检查登录用户名  
+        function checkUsername(){  
+            var username = document.loginForm.UserName;  
+            if(username.value.length!=0){  
+                return true;  
+            }else{  
+                alert("用户名不能为空");  
+                return false;  
+            }  
+        }  
+        //检查登录密码  
+        function checkPassword(){  
+            var password = document.loginForm.Password;  
+            if(password.value.length!=0){  
+                return true;  
+            }else{  
+                alert("密码不能为空");  
+                return false;  
+            }  
+        }
+	</script> 
+
+
+</body>
+
+</html>

@@ -1,0 +1,321 @@
+ <!-- FlatFy Theme - Andrea Galanti /-->
+<!doctype html>
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
+<!--[if IE 9]>    <html class="no-js ie9" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!--> <html> <!--<![endif]-->
+
+
+<body id="home">
+
+	<!-- Preloader -->
+	<div id="preloader">
+		<div id="status"></div>
+	</div>
+	
+    
+	
+	<div id='head'></div>
+
+	
+
+	
+	
+	
+
+
+	
+	
+	<div  class="content-section-b " style="background-color: #f8f8f8">
+		<div class="container">
+			<div class="col-md-6 col-md-offset-3 text-center wrap_title">
+				<h2 style="font-size: 36px">注册</h2>
+				<p class="lead" style="margin-top:0">Sign Up</p>
+			 </div>
+             <div class="col-md-6 col-md-offset-3">
+                 <form id='RegForm'>
+                    <div class="form-group">
+                        <label>用户名</label>
+                        <input type="text" class="form-control" placeholder="请输入用户名" name="Username" required/>
+                    </div>
+                    <div class="form-group">
+                        <label>密码</label>
+                        <input type="password" class="form-control" placeholder="请输入密码" name="Password" required/>
+                    </div>
+                    <div class="form-group">
+                        <label>确认密码</label>
+                        <input type="password" class="form-control" placeholder="确认密码" name="CPassword" required/>
+                    </div>
+                    <div class="form-group">
+                        <label>电子邮箱</label>
+                        <input type="text" class="form-control" placeholder="请输入常用电子邮箱" name="email" required/>
+                    </div>
+                    <div class="form-group">
+                        <label>邀请ID</label>
+                        <input type="text" class="form-control" placeholder="如有请输入邀请人ID" name="AmwayID" id="AmwayID"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="Phone">手机号码</label>
+                        <input type="text" class="form-control" placeholder="请输入常用手机号" name="phone" id='Phone' required
+                        pattern="1[34578]\d{9}"
+                        data-bv-regexp-message="请输入正确的11位手机号"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="sms">验证码</label>
+                        <div class="form-inline row">
+                        
+                            <div class="form-group col-sm-6">
+                        
+                                <input type="text" class="form-control " id="sms" name="sms" placeholder="接收到的短信验证码" required data-bv-notempty-message="请输入验证码">
+                            
+                            </div>
+                            <div class="form-group col-md-3 col-md-offset-3">
+                                <button  id='getSMS' type="button" class="wow tada btn btn-info" onclick='getSMSfuc()' >获取验证码</button> 
+                            </div> 
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="sms"> </label>
+                        <input type="submit" name="submit" id="submit" value="注册" class=" btn-block btn  btn-embossed btn-primary">
+                    </div>
+                </form>
+                    </div>
+                </div>
+                
+			
+
+			
+		</div>
+	</div>	
+
+	<div id='footer'></div>
+	
+	
+	
+
+    <!-- StikyMenu -->
+    
+    <!-- JavaScript -->
+    <script src="/static/js/jquery-1.10.2.js"></script>
+    <script src="/static/js/bootstrap.js"></script>
+    <script src="/static/js/owl.carousel.js"></script>
+    <script src="/static/js/jquery.cookie.js"></script> 
+    <script src="/static/js/script.js"></script>
+    <script src="/static/js/stickUp.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap-validator/0.5.3/js/bootstrapValidator.min.js"></script>
+    <script>
+        function cooldown(time){   //冷却获取验证码按钮
+            var btn = $('#getSMS');
+                btn.attr('disabled', 'disabled');
+               
+                var txt = btn.text();
+                var count = time;
+                var func = function() {
+                    if (count == 0) {
+                        btn.removeAttr('disabled');
+                        btn.removeClass() 
+                            .addClass("btn btn-info pull-right");
+                        btn.text(txt);
+                    } else {
+                        btn.removeClass() 
+                    .addClass("btn btn-default pull-right"); 
+                        btn.text(txt + ' (' + count + ')');
+                        count--;
+                        setTimeout(func, 1000);
+                    }
+                };
+
+                setTimeout(func, 0);
+                return false;
+
+        }
+        function getSMSfuc(){
+            phone=$('#Phone').val();
+        	if((/^1[34578]\d{9}$/.test(phone))){  
+                //TODO  sent SMS
+              
+                        $.ajax({
+                                url: '/register/null',
+                                type: 'post',
+                                headers:{"X-CSRFToken":$.cookie('csrftoken')},
+                                data: 
+                                    {phone: phone,}
+                              }).then(function(resp) {
+                                
+                                cooldown(60);
+                              })
+				
+                }  
+  
+            
+
+            return false;
+        }
+
+        $(function(){  
+          	$('#head').load('/static/head.html', function() {
+              FlatfyInit();
+              $('.navbar-default').stickUp();
+              cooldown(10);
+            });
+          	$('#footer').load('/static/footer.html');
+            invitorID={{invitorID}}
+            $("#AmwayID").val(invitorID)
+            //$("#Salesman").change(function(){checksman();});   
+            //提交按钮事件，false:不能提交，抑制提交按钮  
+            
+            $('form').bootstrapValidator({
+    　　　　　　　　message: '该字段不能为空',
+                    threshold :  6 ,
+                    fields:{
+                        Username: {
+                             message:'用户名无效',
+                             validators: {
+                                 notEmpty: {
+                                     message: '用户名不能为空'
+                                 },
+                                 stringLength: {
+                                     min: 6,
+                                     max: 12,
+                                     message: '用户名长度必须在6-12位之间'
+                                 },
+                                 regexp: {
+                                     regexp: /^[a-zA-Z0-9_\.]+$/,
+                                     message: '用户名只能用字母和数字组成'
+                                 },
+                                 
+                                 //TODO
+                                 remote: {//ajax验证。server result:{"valid",true or false} 向服务发送当前input name值，获得一个json数据。例表示正确：{"valid",true}  
+                                             url: '/register/CheckName',//验证地址
+                                             message: '用户已存在',//提示消息
+                                             delay :  2000,
+                                             headers:{"X-CSRFToken":$.cookie('csrftoken')},
+                                             type: 'POST',//发送的信息是用户输入的用户名
+
+                                         }
+                             },
+                         },
+
+                             email: {
+                                 validators: {
+                                     notEmpty: {
+                                         message: '邮件不能为空'
+                                     },
+                                     emailAddress: {
+                                         message: '请输入正确的邮件地址如：123@qq.com'
+                                     },
+                                     remote: {//ajax验证。server result:{"valid",true or false} 向服务发送当前input name值，获得一个json数据。例表示正确：{"valid",true}  
+                                     url: '/register/CheckEmail',//验证地址
+                                     message: '该邮箱已经被注册',//提示消息
+                                     delay :  2000,
+                                     headers:{"X-CSRFToken":$.cookie('csrftoken')},
+                                     type: 'POST'//发送的信息是用户输入的用户名
+                                         }
+                                 }
+                             },
+                             phone: {
+                                 validators: {
+
+                                     remote: {//ajax验证。server result:{"valid",true or false} 向服务发送当前input name值，获得一个json数据。例表示正确：{"valid",true}  
+                                     url: '/register/CheckPhone',//验证地址
+                                     message: '该手机号已经被注册',//提示消息
+                                     delay :  2000,
+                                     headers:{"X-CSRFToken":$.cookie('csrftoken')},
+                                     type: 'POST'//发送的信息是用户输入的用户名
+                                         }
+                                 }
+                             },
+                            Password: {
+                                 message:'密码无效',
+                                 validators: {
+                                     notEmpty: {
+                                         message: '密码不能为空'
+                                     },
+                                     stringLength: {
+                                         min: 6,
+                                         max: 30,
+                                         message: '密码长度必须大于6位'
+                                     },
+                                     
+                                     different: {//不能和用户名相同
+                                         field: 'Username',//需要进行比较的input name值
+                                         message: '不能和用户名相同'
+                                     },
+                                     regexp: {
+                                         regexp: /^[a-zA-Z0-9_\.]+$/,
+                                         message: '密码只能用字母和数字组成'
+                                     }
+                                 }
+                             },
+                             CPassword: {
+                                 message:'密码无效',
+                                 validators: {
+                                     identical: {//相同
+                                         field: 'Password', //需要进行比较的input name值
+                                         message: '两次密码不一致'
+                                     },
+                                     
+                                },
+                             },
+                            sms: {
+                                message:'验证码错误',
+                                validators: {
+                                     regexp: {
+                                         regexp: /^[0-9]{6}$/,
+                                         message: '验证码格式错误'
+                                     },
+                                     
+                                     //TODO
+
+                                    }
+                                },
+                        }
+                    
+            });
+            $("#submit").click(function(){  
+                if($('form').data("bootstrapValidator").isValid()){
+                    alert('yibor');
+                    //TODO 提交表格
+
+                    $.ajax({
+                                url: '/SignMeUp/',
+                                type: 'post',
+                                headers:{"X-CSRFToken":$.cookie('csrftoken')},
+                                data: 
+                                    $('form').serialize(),
+                              }).then(function(resp) {
+                                if(resp.success) {
+                                  alert(resp.msg);
+                                  window.location.href='/home/';
+                                }else{
+                                  alert(resp.msg);
+                                }
+                              })
+
+                } 
+                
+            }); 
+            
+        });
+
+	</script>
+    
+
+	
+
+	<!-- Smoothscroll -->
+
+	<script src="/static/js/wow.min.js"></script>
+	<script>
+	 new WOW().init();
+	</script>
+
+    <!-- Magnific Popup core JS file -->
+    <script src="/static/js/jquery.magnific-popup.js"></script> 
+
+
+
+</body>
+
+</html>

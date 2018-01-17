@@ -1,0 +1,219 @@
+ <!-- FlatFy Theme - Andrea Galanti /-->
+<!doctype html>
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
+<!--[if IE 9]>    <html class="no-js ie9" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!--> <html> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="description" content="Flatfy Free Flat and Responsive HTML5 Template ">
+    <meta name="author" content="">
+
+     <title>以太战舰-区块链集换式卡牌游戏|Ether Warship</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+ 
+    <!-- Custom Google Web Font -->
+    <link href="/static/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Arvo:400,700' rel='stylesheet' type='text/css'>
+	
+    <!-- Custom CSS-->
+    <link href="/static/css/general.css" rel="stylesheet">
+	
+	 <!-- Owl-Carousel -->
+    <link href="/static/css/custom.css" rel="stylesheet">
+	<link href="/static/css/owl.carousel.css" rel="stylesheet">
+    <link href="/static/css/owl.theme.css" rel="stylesheet">
+	<link href="/static/css/style.css" rel="stylesheet">
+	<link href="/static/css/animate.css" rel="stylesheet">
+	
+	<!-- Magnific Popup core CSS file -->
+	<link rel="stylesheet" href="/static/css/magnific-popup.css"> 
+	
+	<script src="/static/js/modernizr-2.6.2.min.js"></script>  <!-- Modernizr /-->
+</head>
+
+<body id="home">
+
+	<!-- Preloader -->
+	<div id="preloader">
+		<div id="status"></div>
+	</div>
+	
+	<div id='head'></div>
+	
+	
+	<div class="content-section-a">
+
+        <div class="container">
+			
+            <div class="row">
+			
+				<div class="col-sm-6 pull-right wow fadeInRightBig" style="background-color: #f5f5f5">
+					<p class="pull-right">
+						欢迎,  {{username}}    &#12288&#12288&#12288
+						 
+						<a  href="/logout/">登出</a>
+					</p>
+					<p>
+						 &#12288
+					</p>
+                    <p class="lead">
+						{% if amwayresult %}
+						     
+						     <p class="lead">您已经邀请了{{num}}位好友:</p>
+						     <ul class="list-group" style="background-color: #f5f5f5">
+							{% for i in amwayresult %}
+							    <li class="list-group-item" style="background-color: #e7e7e7">{{ i}}</li>
+							{% endfor %}
+							</ul>
+							<p>
+						 &#12288
+					</p>	
+							<p class="lead">邀请的好友越多，得到的奖励也越丰厚</p>
+						{% else %}
+						<p class="lead">您还没有邀请任何好友注册，赶快去分享链接吧~</p>
+						<p>
+						 &#12288
+					</p>	
+							<p class="lead">作为首发玩家，邀请的好友越多，得到的首发奖励也越丰厚</p>
+						{% endif %}
+					</p>
+                </div>
+				
+                <div class="col-sm-5 wow fadeInLeftBig"  data-animation-delay="200" style="background-color: #e7e7e7">   
+                	 <h3 class="section-heading">
+						首发福利，推广即得创世战舰
+					</h3>
+					<p>
+						 &#12288
+					</p>
+                  
+                    <p class="lead2">
+						 您的推广ID为：{{amwayid}}
+
+					</p>
+
+					
+					<form role="form">
+					  <div class="form-group">
+					    <label for="AmwayID">邀请您的好友注册凭借此邀请ID注册</label>
+					    <textarea id='AmwayID' class="form-control" rows="1"></textarea>
+					    
+					  </div>
+					  <button  id='copyAmwayID' type="button" class=" btn btn-info pull-right" onclick='copyAID()' >复制推广ID</button>
+					  <p>
+						 &#12288
+					</p>
+					</form>
+
+
+					<form role="form">
+					  <div class="form-group">
+					    <label for="AmwayURL">或直接由以下链接注册</label>
+					    <textarea id='AmwayURL' class="form-control" rows="1"></textarea>
+					  </div>
+					  <button  id='copyAmwayURL' type="button" class=" btn btn-info pull-right" onclick='copyAURL()' >复制推广链接</button>
+						
+					</form>
+
+					
+					
+					
+
+					<p>
+						 &#12288
+					</p>
+
+
+                    <p class="lead3">
+						-邀请3位好友加入即得护卫舰一艘。
+					</p>
+					<p class="lead3">
+						-邀请10位好友加入即得驱逐舰一艘。
+					</p>
+					 
+					<p class="lead3">
+						-邀请100位好友加入即得轻型巡洋舰一艘。
+					</p>
+					<p class="lead3">
+						-邀请100位好友加入即得重型巡洋舰一艘。
+					</p>
+
+					<p class="lead3">
+						-邀请100位好友加入即得重型巡洋舰一艘。
+					</p>
+					<p class="lead3">
+						-邀请1000位好友加入即得至尊战列舰一艘。
+					</p>
+
+					<p>
+						 &#12288
+					</p>
+
+					<p >
+						游戏正式上线后将关闭推广得舰渠道。
+					</p>
+				</div>   
+            </div>
+        </div>
+        <!-- /.container -->
+    </div>
+
+
+
+	<div id='footer'></div>
+	
+	
+	
+
+
+    <!-- JavaScript -->
+    <script src="/static/js/jquery-1.10.2.js"></script>
+ 	 <script>
+ 	 	function copyAID(){
+ 	 		$('#AmwayID').select();
+ 	 		document.execCommand("Copy"); 
+ 	 	}
+ 	 	function copyAURL(){
+ 	 		$('#AmwayURL').select();
+ 	 		document.execCommand("Copy"); 
+ 	 	}
+		$(function(){
+			$('#head').load('/static/head.html', function() {
+			  FlatfyInit();
+			  $('.navbar-default').stickUp();
+			});
+			$('#footer').load('/static/footer.html');
+			amwayid={{amwayid}}
+			$('#AmwayID').val({{amwayid}});
+			$('#AmwayURL').val("http://etherwarship.com/"+{{amwayid}})
+		})
+	</script>
+    <script src="/static/js/bootstrap.js"></script>
+	<script src="/static/js/owl.carousel.js"></script>
+	<script src="/static/js/script.js"></script>
+	<!-- StikyMenu -->
+	<script src="/static/js/stickUp.min.js"></script>
+	
+
+	<!-- Smoothscroll -->
+
+	<script src="/static/js/wow.min.js"></script>
+	<script>
+	 new WOW().init();
+	</script>
+	<script src="/static/js/classie.js"></script>
+	<script src="/static/js/uiMorphingButton_inflow.js"></script>
+	<!-- Magnific Popup core JS file -->
+	<script src="/static/js/jquery.magnific-popup.js"></script> 
+
+
+
+</body>
+
+</html>
