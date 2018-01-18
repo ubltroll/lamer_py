@@ -62,8 +62,9 @@
                         pattern="1[34578]\d{9}"
                         data-bv-regexp-message="请输入正确的11位手机号"/>
                     </div>
+                    <div class="l-captcha" data-site-key="5eaf9b7ce829b6634a4d450d680227f8"></div>
                     <div class="form-group">
-                        <label for="sms">验证码</label>
+                        <label for="sms">短信验证码</label>
                         <div class="form-inline row">
                         
                             <div class="form-group col-sm-6">
@@ -72,7 +73,7 @@
                             
                             </div>
                             <div class="form-group col-md-3 col-md-offset-3">
-                                <button  id='getSMS' type="button" class="wow tada btn btn-info" onclick='getSMSfuc()' >获取验证码</button> 
+                                <button  id='getSMS' type="button" class="wow tada btn btn-info" onclick='getSMSfuc()' >发送验证码</button> 
                             </div> 
                         </div>
                     </div>
@@ -133,6 +134,7 @@
         }
         function getSMSfuc(){
             phone=$('#Phone').val();
+            luotest=$('#lc-captcha-response').val()
         	if((/^1[34578]\d{9}$/.test(phone))){  
                 //TODO  sent SMS
               
@@ -141,7 +143,8 @@
                                 type: 'post',
                                 headers:{"X-CSRFToken":$.cookie('csrftoken')},
                                 data: 
-                                    {phone: phone,}
+                                    {phone: phone,
+                                    luotest_response:luotest}
                               }).then(function(resp) {
                                 
                                 cooldown(60);
@@ -317,7 +320,7 @@
     <!-- Magnific Popup core JS file -->
     <script src="/static/js/jquery.magnific-popup.js"></script> 
 
-
+    <script src="//captcha.luosimao.com/static/js/api.js"></script>
 
 </body>
 

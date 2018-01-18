@@ -70,7 +70,11 @@ def godjudges(phone,sms):
 def SentSMS(request):
     phone = request.POST['phone']
     dic={}
-
+    if 1:
+        dic['msg'] = 'debug mode'
+        dic['success'] = False
+        jstr = json.dumps(dic)
+        return HttpResponse(jstr, content_type='application/json')
     
     if phone.isdigit() and len(phone)==11:
         code=godsays(phone)
