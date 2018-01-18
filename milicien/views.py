@@ -68,7 +68,7 @@ def godjudges(phone,sms):
 
 
 def SentSMS(request):
-    phone = request.POST['phone']
+    
     dic={}
     #debug mode on 
     luotest_response=request.POST['luotest_response']
@@ -89,7 +89,7 @@ def SentSMS(request):
     #debug mode------------------------
 
 
-
+    phone = request.POST['phone']
     if phone.isdigit() and len(phone)==11:
         code=godsays(phone)
         smstext='您的验证码为'+code+'，请在5分钟内完成注册。【以太战舰】'
