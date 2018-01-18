@@ -152,7 +152,7 @@
             }
         	if((/^1[34578]\d{9}$/.test(phone)) && luotest ){  
                 //TODO  sent SMS
-                    alert('a'); 
+                    //alert('a'); 
                         $.ajax({
                                 url: '/register/null',
                                 type: 'post',
@@ -161,10 +161,12 @@
                                     {phone: phone,
                                     luotest_response:luotest}
                               }).then(function(resp) {
+                                    if(!resp.success) {
+                                  alert('Failed')
+                                }
                                 
-                                cooldown(60);
                               })
-				
+				        cooldown(60);
                 }  
   
             
