@@ -140,7 +140,8 @@
             phone=$('#Phone').val();
             luotest=$('#lc-captcha-response').val()
             if (luotest == ''){
-                alert('请先进行人机验证')
+                alert('请先进行人机验证');
+                a='test';
                 return false;
             }
         	if((/^1[34578]\d{9}$/.test(phone)) && luotest ){  
