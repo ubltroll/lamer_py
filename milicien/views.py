@@ -71,12 +71,12 @@ def SentSMS(request):
     
     dic={}
     #debug mode on 
-    luotest_response=request.POST['luotest_response']
+    luotest=request.POST['luotest_response']
     resp = requests.post("https://captcha.luosimao.com/api/site_verify",
             #auth=("api_key", "9667e877e20e6380832f6abd6642cfda"),
             data={
             "api_key": '9667e877e20e6380832f6abd6642cfda',
-            "response": luotest_response
+            "response": luotest
             },timeout=3 , verify=False)
     result =  json.loads( resp.content.decode('utf-8') )
 
