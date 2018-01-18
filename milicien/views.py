@@ -181,6 +181,20 @@ def SignMeUp(request):
     AmwayID =	request.POST['AmwayID']
     sms =   request.POST['sms']
     dic={}
+
+    UniquePhone=False
+    try:
+        User.objects.get(last_name=phone)
+    except:
+        UniquePhone = True
+
+
+    if not UniquePhone:
+        dic['success'] = False
+        dic['msg'] = '手机号已经被注册'
+        jstr = json.dumps(dic)
+        return HttpResponse(jstr, content_type='application/json')
+
     if not godjudges(phone,sms):
         dic['success'] = False
         dic['msg'] = '短信验证码错误'
