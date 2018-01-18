@@ -71,7 +71,7 @@ def SentSMS(request):
     
     dic={}
     #debug mode on 
-    luotest=request.POST['luotest_response']
+    luotest=request.POST.get('luotest_response', False)
     resp = requests.post("https://captcha.luosimao.com/api/site_verify",
             #auth=("api_key", "9667e877e20e6380832f6abd6642cfda"),
             data={
