@@ -79,10 +79,11 @@ def SentSMS(request):
             "response": luotest
             },timeout=3 , verify=False)
     result =  json.loads( resp.content.decode('utf-8') )
-    dic['msg'] = luotest
-    dic['success'] = True
+    dic['msg'] = 'wrong captcha'
+    dic['success'] = False
     jstr = json.dumps(result)
-    return HttpResponse(jstr, content_type='application/json')
+    if result['res']!='success':
+        return HttpResponse(jstr, content_type='application/json')
     #debug mode------------------------
 
 
