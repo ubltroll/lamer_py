@@ -121,7 +121,7 @@ def CheckName(request):
     return HttpResponse(jstr, content_type='application/json')
 
 def CheckPhone(request):
-    username = request.POST['phone']
+    phone = request.POST['phone']
     dic={}
     dic['valid'] = False
     try:

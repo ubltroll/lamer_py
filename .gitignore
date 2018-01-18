@@ -3,3 +3,4 @@
 *.pyc
 *.pyc
 milicien/__pycache__/views.cpython-35.pyc
+db.sqlite3
