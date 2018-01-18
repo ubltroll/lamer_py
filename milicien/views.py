@@ -12,7 +12,7 @@ import requests
 
 # Create your views here.
 def index(request):
-    return render(request,'index.html', {'NumForShow': User.objects.count()+181500})
+    return render(request,'index.html', {'NumForShow': User.objects.count()+5800})
 
 def login1(request):
     if not request.user.is_anonymous:
@@ -81,10 +81,10 @@ def SentSMS(request):
             "mobile": phone,
             "message": smstext
             },timeout=3 , verify=False)
-        result =  json.loads( resp.content )
+        #result =  json.loads( resp.content )
         dic['msg'] = 'ok'
         dic['success'] = True
-        jstr = result
+        jstr = json.dumps(dic)
         return HttpResponse(jstr, content_type='application/json')
     dic['msg'] = '手机号无效'
     dic['success'] = False
