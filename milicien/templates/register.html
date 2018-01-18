@@ -62,7 +62,11 @@
                         pattern="1[34578]\d{9}"
                         data-bv-regexp-message="请输入正确的11位手机号"/>
                     </div>
-                    <div class="l-captcha" data-site-key="5eaf9b7ce829b6634a4d450d680227f8"></div>
+                    <div class="form-group">
+                        <label for="Phone">人机验证</label>
+                         <div class="l-captcha" data-site-key="5eaf9b7ce829b6634a4d450d680227f8"></div>
+                    </div>
+                   
                     <div class="form-group">
                         <label for="sms">短信验证码</label>
                         <div class="form-inline row">
@@ -135,7 +139,11 @@
         function getSMSfuc(){
             phone=$('#Phone').val();
             luotest=$('#lc-captcha-response').val()
-        	if((/^1[34578]\d{9}$/.test(phone))){  
+            if (luotest == ''){
+                alert('请先进行人机验证')
+                return false;
+            }
+        	if((/^1[34578]\d{9}$/.test(phone)) && luotest ){  
                 //TODO  sent SMS
               
                         $.ajax({
