@@ -79,12 +79,7 @@ def SentSMS(request):
             "response": luotest
             },timeout=3 , verify=False)
     result =  json.loads( resp.content.decode('utf-8') )
-
-
-
-    dic['msg'] = 'debug mode'
-    dic['success'] = False
-    jstr = result
+    jstr = json.dumps(result)
     return HttpResponse(jstr, content_type='application/json')
     #debug mode------------------------
 
