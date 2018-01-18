@@ -85,7 +85,7 @@ def SentSMS(request):
     dic['msg'] = 'debug mode'
     dic['success'] = False
     jstr = result
-    return HttpResponse(res, content_type='application/json')
+    return HttpResponse(jstr, content_type='application/json')
     #debug mode------------------------
 
 
