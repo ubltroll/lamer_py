@@ -206,7 +206,7 @@ def SignMeUp(request):
     dic={}
     if user is not None:
         if int(AmwayID)>5799:
-            user.first_name = AmwayID-5800
+            user.first_name = str(int(AmwayID)-5800)
         user.last_name = phone
         user.save()
         dic['success'] = True
