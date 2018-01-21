@@ -8,8 +8,9 @@ from django.contrib.auth import logout
 from django.http import HttpResponseRedirect  
 import json
 import random
-import requests
+import requests,datetime
 
+from milicien.models import assistance
 # Create your views here.
 def index(request):
     return render(request,'index.html', {'NumForShow': User.objects.count()+5800})
@@ -29,7 +30,7 @@ def register(request,invitorID=''):
 def home(request):
     if(request.user.is_anonymous):
         return HttpResponseRedirect("/index/")
-    AmwayUsers=User.objects.filter(first_name=str(request.user.id))
+    AmwayUsers=User.objects.filter(first_name=str(request.user.id+5800))
     Amway=[]
     for man in AmwayUsers:
         cellphone=man.last_name
@@ -39,7 +40,10 @@ def home(request):
 
     num=len(Amway)
 
-    return render(request,'user.html', {'username':request.user.username,'amwayid':request.user.id+5800,'amwayresult':Amway,'num':num})#用户id加5800为推广ID
+
+    return render(request,'user.html', {'username':request.user.username,'amwayid':request.user.id+5800,
+        'amwayresult':Amway,'num':num,'nickname':request.user.profile.nickname,'checkin':request.user.profile.checkin,'credits':request.user.profile.credits
+        })#用户id加5800为推广ID
 
 
 def findpsd(request):
@@ -180,6 +184,7 @@ def SignMeUp(request):
     phone =	request.POST['phone']
     AmwayID =	request.POST['AmwayID']
     sms =   request.POST['sms']
+    nickname = request.POST['nickname']
     dic={}
 
     UniquePhone=False
@@ -208,6 +213,15 @@ def SignMeUp(request):
         if int(AmwayID)>5799:
             user.first_name = str(int(AmwayID)-5800)
         user.last_name = phone
+        user.profile.uid = int(user.id)
+        user.profile.assistance = 3
+        user.profile.checkin = False
+        user.profile.ships = '00000'
+        user.profile.friend1=0
+        user.profile.friend2=0
+        user.profile.credits=0
+        user.profile.nickname=nickname
+        user.profile.cooldowntime=datetime.datetime.strptime('1815-06-18 17:41:20', '%Y-%m-%d %H:%M:%S')
         user.save()
         dic['success'] = True
         dic['msg'] = '注册成功'
@@ -226,3 +240,59 @@ def logout_view(request):
     logout(request)
     # Redirect to a success page.
     return HttpResponseRedirect("/index/")
+
+
+@login_required(login_url='/login/')   #签到获得战舰碎片并刷新邀请次数
+def checkin(request):
+    dic={}
+    if (datetime.datetime.now() - request.user.profile.cooldowntime).days :
+        dic['success'] = True
+        dic['msg'] = '签到成功,战舰碎片+3'
+        request.user.profile.cooldowntime=datetime.datetime.now()
+        request.user.profile.credits+=3
+        request.user.profile.friend1=0
+        request.user.profile.friend2=0
+        request.user.profile.assistance=3
+        request.user.save()
+    else:
+        dic['success'] = False
+        dic['msg'] = '冷却时间未到'
+
+    jstr = json.dumps(dic)
+    return HttpResponse(jstr, content_type='application/json')
+
+
+@login_required(login_url='/login/')   #助攻他人获得战舰碎片
+def checkin(request):
+    friend = int(request.POST['friend'])
+    dic={}
+    try:
+        frienduser=User.objects.get(uid=friend)
+    except:
+        dic['success'] = False
+        dic['msg'] = '错误的id'
+        jstr = json.dumps(dic)
+        return HttpResponse(jstr, content_type='application/json')
+    if friend==request.user.profile.uid or friend==request.user.profile.friend1 or friend==request.user.profile.friend2:
+        dic['success'] = False
+        dic['msg'] = 'ID重复或是自己'
+    else:
+        dic['success'] = True
+        dic['msg'] = '成功'
+        if request.user.profile.assistance == 0 :
+            dic['success'] = False
+            dic['msg'] = '次数用尽'
+        else:
+            assistancedata=assistance.objects.create(fromuser=request.user.profile.uid,touser=friend)
+            assistancedata.save()
+            frienduser.profile.credits+=3   #一次3点
+            frienduser.save()
+            if request.user.profile.assistance == 3:
+                request.user.profile.friend1=friend
+            elif request.user.profile.assistance == 2:
+                request.user.profile.friend3=friend
+            request.user.profile.assistance-=1
+            request.user.save()
+
+    jstr = json.dumps(dic)
+    return HttpResponse(jstr, content_type='application/json')

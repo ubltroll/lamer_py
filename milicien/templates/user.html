@@ -53,16 +53,23 @@
 			
             <div class="row">
 			
-				<div class="col-sm-6 pull-right wow fadeInRightBig" style="background-color: #f5f5f5">
+				<div class="col-sm-7 pull-right wow fadeInRightBig" style="background-color: #f5f5f5">
+					
 					<p class="pull-right">
 						欢迎,  {{username}}    &#12288&#12288&#12288
 						 
 						<a  href="/logout/">登出</a>
 					</p>
+
+					<p class="pull-left">
+						您目前拥有的战舰碎片：{{credits}} 
+
+					</p>
 					<p>
 						 &#12288
 					</p>
-                    <p class="lead">
+
+                    <div>
 						{% if amwayresult %}
 						     
 						     <p class="lead">您已经邀请了{{num}}位好友:</p>
@@ -74,7 +81,7 @@
 							<p>
 						 &#12288
 					</p>	
-							<p class="lead">邀请的好友越多，得到的奖励也越丰厚</p>
+					<p class="lead">邀请的好友越多，得到的奖励也越丰厚</p>
 						{% else %}
 						<p class="lead">您还没有邀请任何好友注册，赶快去分享链接吧~</p>
 						<p>
@@ -82,12 +89,15 @@
 					</p>	
 							<p class="lead">作为首发玩家，邀请的好友越多，得到的首发奖励也越丰厚</p>
 						{% endif %}
+					</div>
+					<p>
+						 &#12288
 					</p>
                 </div>
 				
-                <div class="col-sm-5 wow fadeInLeftBig"  data-animation-delay="200" style="background-color: #e7e7e7">   
+                <div class="col-sm-4 wow fadeInLeftBig"  data-animation-delay="200" style="background-color: #e7e7e7">   
                 	 <h3 class="section-heading">
-						首发福利，推广即得创世战舰
+						首发福利，立得创世战舰
 					</h3>
 					<p>
 						 &#12288
@@ -99,7 +109,7 @@
 					</p>
 
 					
-					<form role="form">
+					<form role="form" >
 					  <div class="form-group">
 					    <label for="AmwayID">邀请您的好友注册凭借此邀请ID注册</label>
 					    <textarea id='AmwayID' class="form-control" rows="1"></textarea>
