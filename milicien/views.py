@@ -45,11 +45,15 @@ def home(request):
     for i in range(0,5):
         ships.append(int(strships[i]))
         shipsnum+=ships[i]
-    recent='莱菔'
+    recent=[]
     msgs=assistance.objects.filter(touser=request.user.profile.uid)
     for msg in msgs:
         if msg.fromuser==0:
-            recent+='邀请好友注册碎片+10'
+            temp=((datetime.datetime.now()-msg.time.replace(tzinfo=None)).days)
+            if temp:
+                recent=(str(temp)+'天: 邀请好友注册碎片+10')
+            else:
+                recent=('今天: 邀请好友注册碎片+10')
 
 
     return render(request,'user.html', {'username':request.user.username,'amwayid':request.user.id+5800,
