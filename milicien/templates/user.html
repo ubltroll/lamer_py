@@ -5,37 +5,7 @@
 <!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
 <!--[if IE 9]>    <html class="no-js ie9" lang="en"> <![endif]-->
 <!--[if gt IE 9]><!--> <html> <!--<![endif]-->
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
-    <meta name="description" content="Flatfy Free Flat and Responsive HTML5 Template ">
-    <meta name="author" content="">
 
-     <title>以太战舰-区块链集换式卡牌游戏|Ether Warship</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
- 
-    <!-- Custom Google Web Font -->
-    <link href="/static/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
-	<link href='http://fonts.googleapis.com/css?family=Arvo:400,700' rel='stylesheet' type='text/css'>
-	
-    <!-- Custom CSS-->
-    <link href="/static/css/general.css" rel="stylesheet">
-	
-	 <!-- Owl-Carousel -->
-    <link href="/static/css/custom.css" rel="stylesheet">
-	<link href="/static/css/owl.carousel.css" rel="stylesheet">
-    <link href="/static/css/owl.theme.css" rel="stylesheet">
-	<link href="/static/css/style.css" rel="stylesheet">
-	<link href="/static/css/animate.css" rel="stylesheet">
-	
-	<!-- Magnific Popup core CSS file -->
-	<link rel="stylesheet" href="/static/css/magnific-popup.css"> 
-	
-	<script src="/static/js/modernizr-2.6.2.min.js"></script>  <!-- Modernizr /-->
-</head>
 
 <body id="home">
 
@@ -68,7 +38,116 @@
 					<p>
 						 &#12288
 					</p>
+					<table class="table table-hover table-bordered">
+					  <caption >{{nickname}}的船坞</caption>
+					  <thead >
+					    <tr >
+					      <th>战舰级别</th>
+					      <th>数量</th>
+					      <th>备注</th>
+					      <th>cd-key</th>
+					    </tr>
+					  </thead>
+					  <tbody>
+					    {% if ships.0 %}
+						    <tr>
+					      <td>护卫舰</td>
+					      <td>{{ships.0}}</td>
+					      <td>首发珍藏</td>
+					      <td>尚未生成</td>
+					    </tr>
+						{% endif %}
+					    {% if ships.1 %}
+						    <tr>
+					      <td>驱逐舰</td>
+					      <td>{{ships.1}}</td>
+					      <td>首发珍藏</td>
+					      <td>尚未生成</td>
+					    </tr>
+						{% endif %}
+					    {% if ships.2 %}
+						    <tr>
+					      <td>轻型巡洋舰</td>
+					      <td>{{ships.2}}</td>
+					      <td>首发珍藏</td>
+					      <td>尚未生成</td>
+					    </tr>
+						{% endif %}
+						{% if ships.3 %}
+						    <tr>
+					      <td>装甲巡洋舰</td>
+					      <td>{{ships.3}}</td>
+					      <td>首发珍藏</td>
+					      <td>尚未生成</td>
+					    </tr>
+						{% endif %}
+						{% if ships.4 %}
+						    <tr>
+					      <td>战列舰</td>
+					      <td>{{ships.4}}</td>
+					      <td>首发珍藏</td>
+					      <td>尚未生成</td>
+					    </tr>
+						{% endif %}
+					    
+					  </tbody>
+					 
+					</table>
+					 {% if not shipsnum %}
+						    <p class="pull-right"> <i>您还没有任何战舰，获取战舰碎片以兑换首发战舰</i></p>
+					 {% else %}
+					 		 <p class="pull-right"> <i>正式上线后将统一生成 cd-key，作为换取区块链卡牌的唯一凭据</i></p>
+						{% endif %}
+					<br />
+					<form role="form">
+						<div class="form-group">
+					    <label for="AmwayURL">您目前拥有的战舰碎片：{{credits}}</label>
 
+					    <button  id='copyAmwayURL' type="button" class=" btn btn-xs btn-primary" onclick='copyAURL()' >签到</button>
+					    <button  id='copyAmwayURL' type="button" class=" btn btn-xs btn-info" onclick='copyAURL()' >复制推广链接</button>
+					    <button  id='copyAmwayURL' type="button" class=" btn btn-xs btn-info" onclick='copyAURL()' >复制推广链接</button>
+					  </div>
+					  
+       				 <div class="form-inline row">
+                        
+                            <div class="form-group col-lg-7">
+                        	
+                                <input type="text" class="form-control" id="sms" name="sms" placeholder="助攻好友" required data-bv-notempty-message="请输入验证码">
+                            
+                            </div>
+                            <div class="form-group  ">
+                                <button  id='getSMS' type="button" class="wow tada btn btn-sm btn-info" onclick='' >助攻好友</button> 
+                            </div> 
+                        </div>
+       
+					   <div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="panel-title">
+										<a data-toggle="collapse" data-parent="#accordion" 
+										   href="#collapseTwo">
+											点击我进行展开，再次点击我进行折叠。第 2 部分
+										</a>
+									</h4>
+								</div>
+								<div id="collapseTwo" class="panel-collapse collapse">
+									<div class="panel-body">
+										Nihil anim keffiyeh helvetica, craft beer labore wes anderson 
+										cred nesciunt sapiente ea proident. Ad vegan excepteur butcher 
+										vice lomo.
+									</div>
+								</div>
+							</div>
+					 
+						<br />
+					  <div class="form-group">
+					    <label for="recent">最近获得的战舰碎片</label>
+					    <textarea id='recent' class="form-control" rows="3"></textarea>
+					  </div>
+					  
+						
+					</form>
+					<br />
+					<br />
                     <div>
 						{% if amwayresult %}
 						     
@@ -78,15 +157,11 @@
 							    <li class="list-group-item" style="background-color: #e7e7e7">{{ i}}</li>
 							{% endfor %}
 							</ul>
-							<p>
-						 &#12288
-					</p>	
+							<br />
 					<p class="lead">邀请的好友越多，得到的奖励也越丰厚</p>
 						{% else %}
 						<p class="lead">您还没有邀请任何好友注册，赶快去分享链接吧~</p>
-						<p>
-						 &#12288
-					</p>	
+						<br />	
 							<p class="lead">作为首发玩家，邀请的好友越多，得到的首发奖励也越丰厚</p>
 						{% endif %}
 					</div>
@@ -184,6 +259,11 @@
 
     <!-- JavaScript -->
     <script src="/static/js/jquery-1.10.2.js"></script>
+    <script src="/static/js/bootstrap.js"></script>
+
+	<script src="/static/js/script.js"></script>
+	<!-- StikyMenu -->
+	<script src="/static/js/stickUp.min.js"></script>
  	 <script>
  	 	function copyAID(){
  	 		$('#AmwayID').select();
@@ -193,23 +273,21 @@
  	 		$('#AmwayURL').select();
  	 		document.execCommand("Copy"); 
  	 	}
+ 	 	recent='{{recent}}'
 		$(function(){
 			$('#head').load('/static/head.html', function() {
 			  FlatfyInit();
 			  $('.navbar-default').stickUp();
 			});
 			$('#footer').load('/static/footer.html');
-			amwayid={{amwayid}}
+			
 			$('#AmwayID').val({{amwayid}});
 			$('#AmwayURL').val("http://etherwarship.com/"+{{amwayid}})
+			$('#recent').val(recent)
 		})
 	</script>
-    <script src="/static/js/bootstrap.js"></script>
-	<script src="/static/js/owl.carousel.js"></script>
-	<script src="/static/js/script.js"></script>
-	<!-- StikyMenu -->
-	<script src="/static/js/stickUp.min.js"></script>
-	
+
+
 
 	<!-- Smoothscroll -->
 
@@ -217,8 +295,8 @@
 	<script>
 	 new WOW().init();
 	</script>
-	<script src="/static/js/classie.js"></script>
-	<script src="/static/js/uiMorphingButton_inflow.js"></script>
+	
+
 	<!-- Magnific Popup core JS file -->
 	<script src="/static/js/jquery.magnific-popup.js"></script> 
 

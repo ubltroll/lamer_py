@@ -12,27 +12,8 @@ $(window).load(function() {
 	$('#preloader').delay(300).fadeOut('slow');
 	$('body').delay(550).css({'overflow':'visible'});
 })
-
-function FlatfyInit() {
-		
-		//animated logo
-		$(".navbar-brand").hover(function () {
-			$(this).toggleClass("animated shake");
-		});
-		
-		//animated scroll_arrow
-		$(".img_scroll").hover(function () {
-			$(this).toggleClass("animated infinite bounce");
-		});
-		
-		//Wow Animation DISABLE FOR ANIMATION MOBILE/TABLET
-		wow = new WOW(
-		{
-			mobile: false
-		});
-		wow.init();
-		
-		//MagnificPopup
+function IndexInit(){
+	//MagnificPopup
 		$('.image-link').magnificPopup({type:'image'});
 
 		// OwlCarousel N1
@@ -65,6 +46,28 @@ function FlatfyInit() {
 					}
 			}
 		});
+		$(".img_scroll").hover(function () {
+			$(this).toggleClass("animated infinite bounce");
+		});
+		
+}
+function FlatfyInit() {
+		
+		//animated logo
+		$(".navbar-brand").hover(function () {
+			$(this).toggleClass("animated shake");
+		});
+		
+		//animated scroll_arrow
+		
+		
+		//Wow Animation DISABLE FOR ANIMATION MOBILE/TABLET
+		wow = new WOW(
+		{
+			mobile: false
+		});
+		wow.init();
+		
 		
 		
 

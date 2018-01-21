@@ -10,7 +10,7 @@ import json
 import random
 import requests,datetime
 
-from milicien.models import assistance
+from milicien.models import assistance,Profile
 # Create your views here.
 def index(request):
     return render(request,'index.html', {'NumForShow': User.objects.count()+5800})
@@ -39,10 +39,22 @@ def home(request):
         Amway.append(cellphone)
 
     num=len(Amway)
+    strships=request.user.profile.ships
+    ships=[]
+    shipsnum=0
+    for i in range(0,5):
+        ships.append(int(strships[i]))
+        shipsnum+=ships[i]
+    recent='莱菔'
+    msgs=assistance.objects.filter(touser=request.user.profile.uid)
+    for msg in msgs:
+        if msg.fromuser==0:
+            recent+='邀请好友注册碎片+10'
 
 
     return render(request,'user.html', {'username':request.user.username,'amwayid':request.user.id+5800,
-        'amwayresult':Amway,'num':num,'nickname':request.user.profile.nickname,'checkin':request.user.profile.checkin,'credits':request.user.profile.credits
+        'amwayresult':Amway,'num':num,'nickname':request.user.profile.nickname,'checkin':request.user.profile.checkin,'credits':request.user.profile.credits,
+        'ships':ships,"shipsnum":shipsnum,'assistance':request.user.profile.assistance,'recent':recent
         })#用户id加5800为推广ID
 
 
@@ -206,14 +218,24 @@ def SignMeUp(request):
         jstr = json.dumps(dic)
         return HttpResponse(jstr, content_type='application/json')
 
-    user = User.objects.create_user(username,email,password)
-    
     dic={}
+    if AmwayID:
+        try:
+            frienduser=User.objects.get(id=(int(AmwayID)-5800))
+            frienduser.profile.credits+=10  #邀请+10
+            frienduser.profile.save()
+            assistancedata=assistance.objects.create(fromuser=0,touser=frienduser.profile.uid)
+            assistancedata.save()
+        except:
+            dic['bug']=1
+            
+    user = User.objects.create_user(username,email,password)  
+    
     if user is not None:
         if int(AmwayID)>5799:
             user.first_name = str(int(AmwayID)-5800)
         user.last_name = phone
-        user.profile.uid = int(user.id)
+        #user.profile.uid = int(user.id)
         user.profile.assistance = 3
         user.profile.checkin = False
         user.profile.ships = '00000'
@@ -221,10 +243,12 @@ def SignMeUp(request):
         user.profile.friend2=0
         user.profile.credits=0
         user.profile.nickname=nickname
-        user.profile.cooldowntime=datetime.datetime.strptime('1815-06-18 17:41:20', '%Y-%m-%d %H:%M:%S')
+        #user.profile.cooldowntime=datetime.datetime.strptime('1815-06-18 17:41:20', '%Y-%m-%d %H:%M:%S')
+        
         user.save()
         dic['success'] = True
         dic['msg'] = '注册成功'
+        login(request, user)
 
     else:
         dic['success'] = False
@@ -263,7 +287,7 @@ def checkin(request):
 
 
 @login_required(login_url='/login/')   #助攻他人获得战舰碎片
-def checkin(request):
+def assist(request):
     friend = int(request.POST['friend'])
     dic={}
     try:
