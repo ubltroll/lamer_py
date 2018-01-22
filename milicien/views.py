@@ -222,7 +222,7 @@ def SignMeUp(request):
     phone =	request.POST['phone']
     AmwayID =	request.POST['AmwayID']
     sms =   request.POST['sms']
-    nickname = request.POST['nickname']
+    #nickname = request.POST['nickname']
     dic={}
 
     UniquePhone=False
@@ -268,7 +268,7 @@ def SignMeUp(request):
         user.profile.friend1=0
         user.profile.friend2=0
         user.profile.credits=0
-        user.profile.nickname=nickname
+        #user.profile.nickname=nickname
         #user.profile.cooldowntime=datetime.datetime.strptime('1815-06-18 17:41:20', '%Y-%m-%d %H:%M:%S')
         
         user.save()
