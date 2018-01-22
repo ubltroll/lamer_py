@@ -39,8 +39,8 @@ def home(request):
         Amway.append(cellphone)
     cooldowntime=datetime.datetime.now() - request.user.profile.cooldowntime.replace(tzinfo=None)
     checkin=1
-    cooldownh=24-int(cooldowntime.seconds/3600)
-    cooldownm=59-int((cooldowntime.seconds-(24-cooldownh)*3600)/60)
+    cooldownh=23-int(cooldowntime.seconds/3600)
+    cooldownm=59-int((cooldowntime.seconds-(23-cooldownh)*3600)/60)
     if cooldowntime.days :
         checkin=0
     
