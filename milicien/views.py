@@ -51,9 +51,19 @@ def home(request):
         if msg.fromuser==0:
             temp=((datetime.datetime.now()-msg.time.replace(tzinfo=None)).days)
             if temp:
-                recent=(str(temp)+'天: 邀请好友注册碎片+10')
+                recent.append(str(temp)+'天: 邀请好友注册碎片+10')
             else:
-                recent=('今天: 邀请好友注册碎片+10')
+                recent.append('今天: 邀请好友注册碎片+10')
+        else:
+            try:
+                name=User.objects.get(id=(msg.fromuser-5800)).username
+            except:
+                name='?'
+            temp=((datetime.datetime.now()-msg.time.replace(tzinfo=None)).days)
+            if temp:
+                recent.append(str(temp)+'天: ID:'+str(msg.fromuser)+'<'+name+'>为您助攻，碎片+3')
+            else:
+                recent.append('今天: ID:'+str(msg.fromuser)+'<'+name+'>为您助攻，碎片+3')
 
 
     return render(request,'user.html', {'username':request.user.username,'amwayid':request.user.id+5800,
