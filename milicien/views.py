@@ -37,7 +37,13 @@ def home(request):
         if len(cellphone)==11:
             cellphone=cellphone[:3]+'****'+cellphone[7:]
         Amway.append(cellphone)
-
+    cooldowntime=datetime.datetime.now() - request.user.profile.cooldowntime.replace(tzinfo=None)
+    checkin=1
+    cooldownh=24-int(cooldowntime.seconds/3600)
+    cooldownm=59-int((cooldowntime.seconds-(24-cooldownh)*3600)/60)
+    if cooldowntime.days :
+        checkin=0
+    
     num=len(Amway)
     strships=request.user.profile.ships
     ships=[]
@@ -51,9 +57,15 @@ def home(request):
         if msg.fromuser==0:
             temp=((datetime.datetime.now()-msg.time.replace(tzinfo=None)).days)
             if temp:
-                recent.append(str(temp)+'天: 邀请好友注册碎片+10')
+                recent.append(str(temp)+'天前: 邀请好友注册碎片+10')
             else:
-                recent.append('今天: 邀请好友注册碎片+10')
+                recent.append(' 今天: 邀请好友注册碎片+10')
+        elif msg.fromuser==1:
+            temp=((datetime.datetime.now()-msg.time.replace(tzinfo=None)).days)
+            if temp:
+                recent.append(str(temp)+'天前: 签到获得战舰碎片+3')
+            else:
+                recent.append(' 今天: 签到获得战舰碎片+3')
         else:
             try:
                 name=User.objects.get(id=(msg.fromuser-5800)).username
@@ -61,14 +73,14 @@ def home(request):
                 name='?'
             temp=((datetime.datetime.now()-msg.time.replace(tzinfo=None)).days)
             if temp:
-                recent.append(str(temp)+'天: ID:'+str(msg.fromuser)+'<'+name+'>为您助攻，碎片+3')
+                recent.append(str(temp)+'天前: ID:'+str(msg.fromuser)+'<'+name+'>为您助攻，碎片+3')
             else:
-                recent.append('今天: ID:'+str(msg.fromuser)+'<'+name+'>为您助攻，碎片+3')
+                recent.append(' 今天: ID:'+str(msg.fromuser)+'<'+name+'>为您助攻，碎片+3')
 
-
+    recent.sort()
     return render(request,'user.html', {'username':request.user.username,'amwayid':request.user.id+5800,
-        'amwayresult':Amway,'num':num,'nickname':request.user.profile.nickname,'checkin':request.user.profile.checkin,'credits':request.user.profile.credits,
-        'ships':ships,"shipsnum":shipsnum,'assistance':request.user.profile.assistance,'recent':recent
+        'amwayresult':Amway,'num':num,'nickname':request.user.profile.nickname,'checkin':checkin,'credits':request.user.profile.credits,
+        'ships':ships,"shipsnum":shipsnum,'assistance':request.user.profile.assistance,'recent':recent,'cooldownh':str(cooldownh),'cooldownm':str(cooldownm)
         })#用户id加5800为推广ID
 
 
@@ -283,15 +295,17 @@ def logout_view(request):
 @login_required(login_url='/login/')   #签到获得战舰碎片并刷新邀请次数
 def checkin(request):
     dic={}
-    if (datetime.datetime.now() - request.user.profile.cooldowntime).days :
+    if (datetime.datetime.now() - request.user.profile.cooldowntime.replace(tzinfo=None)).days :
         dic['success'] = True
         dic['msg'] = '签到成功,战舰碎片+3'
-        request.user.profile.cooldowntime=datetime.datetime.now()
+        request.user.profile.cooldowntime=datetime.datetime.now().replace(tzinfo=None)
         request.user.profile.credits+=3
         request.user.profile.friend1=0
         request.user.profile.friend2=0
         request.user.profile.assistance=3
         request.user.save()
+        assistancedata=assistance.objects.create(fromuser=1,touser=request.user.id+5800)
+        assistancedata.save()
     else:
         dic['success'] = False
         dic['msg'] = '冷却时间未到'
@@ -305,15 +319,19 @@ def assist(request):
     friend = int(request.POST['friend'])
     dic={}
     try:
-        frienduser=User.objects.get(uid=friend)
+        frienduser=User.objects.get(id=(friend-5800))
     except:
+
         dic['success'] = False
         dic['msg'] = '错误的id'
         jstr = json.dumps(dic)
         return HttpResponse(jstr, content_type='application/json')
-    if friend==request.user.profile.uid or friend==request.user.profile.friend1 or friend==request.user.profile.friend2:
+    if friend==request.user.profile.uid :
         dic['success'] = False
-        dic['msg'] = 'ID重复或是自己'
+        dic['msg'] = '不能助攻自己'
+    elif friend==request.user.profile.friend1 or friend==request.user.profile.friend2:
+        dic['success'] = False
+        dic['msg'] = '今天已经助攻过该好友了'
     else:
         dic['success'] = True
         dic['msg'] = '成功'
@@ -331,6 +349,37 @@ def assist(request):
                 request.user.profile.friend3=friend
             request.user.profile.assistance-=1
             request.user.save()
+
+    jstr = json.dumps(dic)
+    return HttpResponse(jstr, content_type='application/json')
+
+@login_required(login_url='/login/')   #换船
+def getship(request):
+    dic={}
+    dic['success'] = False
+    dic['msg'] = '未知错误'
+    enoughmoney=True
+    shiptype=int(request.POST['shiptype'])
+    shipcost=[
+    10,          #GS
+    100,         #DD
+    500,         #CL
+    1000,        #CA
+    10000        #BB
+    ]
+    if request.user.profile.credits < shipcost[shiptype]:
+        dic['msg'] = '余额不足'
+        jstr = json.dumps(dic)
+        return HttpResponse(jstr, content_type='application/json')
+    request.user.profile.credits -= shipcost[shiptype]
+    temp = request.user.profile.ships
+    temp = list(temp)
+    temp[shiptype] = str(int(temp[shiptype])+1)
+    request.user.profile.ships = str(''.join(temp))
+    request.user.profile.save()
+    dic['success'] = True
+    dic['msg'] = '成功'
+
 
     jstr = json.dumps(dic)
     return HttpResponse(jstr, content_type='application/json')

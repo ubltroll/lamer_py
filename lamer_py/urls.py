@@ -34,6 +34,9 @@ urlpatterns = [
     path('register/CheckName', views.CheckName),
     path('register/CheckEmail', views.CheckEmail),
     path('register/CheckPhone', views.CheckPhone),
+    path('user/checkin', views.checkin),
+    path('user/assist', views.assist),
+    path('user/getship', views.getship),
   #  path('register/CheckSMS', views.CheckSMS),
     path('test', views.test),
     path('register/null', views.SentSMS),  #伪装
