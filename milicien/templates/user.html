@@ -471,11 +471,12 @@
 		       if(window.screen.width < 770){
 				$('#amaypart').hide()
 				}
-				else{
-					$('#idforphone').hide()
-				}
+				
 		    } 
 			});
+			if(window.screen.width > 770){
+				$('#idforphone').hide()
+				}
 			$('#footer').load('/static/footer.html');
 						
 			$('#AmwayID').val({{amwayid}});
