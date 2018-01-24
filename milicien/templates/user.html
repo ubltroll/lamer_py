@@ -41,7 +41,7 @@
 
 					</p>
 					<br />
-					<p class="lead">
+					<p class="lead" id='idforphone'>
 						您的用户ID为  {{amwayid}}
 
 					</p>
@@ -470,6 +470,9 @@
 		       // $("#amaypart").hide(); 
 		       if(window.screen.width < 770){
 				$('#amaypart').hide()
+				}
+				else{
+					$('#idforphone').hide()
 				}
 		    } 
 			});
