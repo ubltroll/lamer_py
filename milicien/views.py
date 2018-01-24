@@ -54,14 +54,16 @@ def home(request):
     recent=[]
     msgs=assistance.objects.filter(touser=request.user.profile.uid)
     for msg in msgs:
+        temp=((datetime.datetime.now()-msg.time.replace(tzinfo=None)).days)
+        if temp>3:
+            continue
         if msg.fromuser==0:
-            temp=((datetime.datetime.now()-msg.time.replace(tzinfo=None)).days)
             if temp:
                 recent.append(str(temp)+'天前: 邀请好友注册碎片+10')
             else:
                 recent.append(' 今天: 邀请好友注册碎片+10')
         elif msg.fromuser==1:
-            temp=((datetime.datetime.now()-msg.time.replace(tzinfo=None)).days)
+            #temp=((datetime.datetime.now()-msg.time.replace(tzinfo=None)).days)
             if temp:
                 recent.append(str(temp)+'天前: 签到获得战舰碎片+3')
             else:
@@ -71,7 +73,7 @@ def home(request):
                 name=User.objects.get(id=(msg.fromuser-5800)).username
             except:
                 name='?'
-            temp=((datetime.datetime.now()-msg.time.replace(tzinfo=None)).days)
+            #temp=((datetime.datetime.now()-msg.time.replace(tzinfo=None)).days)
             if temp:
                 recent.append(str(temp)+'天前: ID:'+str(msg.fromuser)+'<'+name+'>为您助攻，碎片+3')
             else:

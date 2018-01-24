@@ -5,6 +5,11 @@
 <!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
 <!--[if IE 9]>    <html class="no-js ie9" lang="en"> <![endif]-->
 <!--[if gt IE 9]><!--> <html> <!--<![endif]-->
+<link rel="stylesheet" href="/static/css/magnific-popup.css">
+<!-- jQuery 1.7.2+ or Zepto.js 1.0+ -->
+
+
+<!-- Magnific Popup core JS file -->
 
 
 <body id="home">
@@ -35,8 +40,10 @@
 						 <i class="glyphicon glyphicon-align-left"></i>
 
 					</p>
-					<p>
-						 &#12288
+					<br />
+					<p class="lead">
+						您的用户ID为  {{amwayid}}
+
 					</p>
 					<table class="table table-hover table-bordered">
 					  <caption >{{username}}的船坞</caption>
@@ -110,6 +117,8 @@
 					</ul>
 					 
 					<br />
+			
+					
 					<form role="form">
 
 					    <p class="lead2 center">您目前拥有的战舰碎片：<i class="glyphicon glyphicon-cog"></i><b>{{credits}}</b></p>
@@ -119,123 +128,119 @@
 					     {% else %}
 					     <button  id='checkin' type="button" class=" btn  disabled">冷却时间：{{cooldownh}}小时{{cooldownm}}分钟</button> 
 					    {% endif %}
-					   
+					   <a class="popup-modal btn btn-primary col-sm-offset-1" href="#test-modal">兑换传世战舰</a>
+
+					<div id="test-modal" class="white-popup-block mfp-hide">
+						<div class="row">
+						    <div class="col-sm-6 col-md-3">
+						         <div class="thumbnail">
+						            <img src="/static/img/ships/0.png" 
+						             >
+						            <div class="caption">
+						                <h3 class="lead2">护卫舰</h3>
+						                <p class="lead3">消耗10碎片</p><br />
+						                <p>
+						                    <a href="#" class="btn btn-xs btn-primary " role="button" id='ship0' onclick="getship(0)">
+						                        兑换
+						                    </a> 
+						                </p>
+						            </div>
+						         </div>
+						    </div>
+						    <div class="col-sm-6 col-md-3">
+						         <div class="thumbnail">
+						            <img src="/static/img/ships/1.png" 
+						             >
+						            <div class="caption">
+						                <h3 class="lead2">驱逐舰</h3>
+						                <p class="lead3">消耗100碎片</p><br />
+						                <p>
+						                    <a href="#" class="btn btn-xs btn-primary" role="button" id='ship1' onclick="getship(1)">
+						                        兑换
+						                    </a> 
+						                </p>
+						            </div>
+						         </div>
+						    </div>
+						    
+						    
+						</div>
+						<div class="row">
+						<div class="col-sm-6 col-md-3">
+						         <div class="thumbnail">
+						            <img src="/static/img/ships/2.png" 
+						             >
+						            <div class="caption">
+						                <h3 class="lead2">轻型巡洋舰</h3>
+						                <p class="lead3">消耗500碎片</p><br />
+						                <p>
+						                    <a href="#" class="btn btn-xs btn-primary" role="button" id='ship2' onclick="getship(2)">
+						                        兑换
+						                    </a> 
+						                </p>
+						            </div>
+						         </div>
+						    </div>
+						    <div class="col-sm-6 col-md-3">
+						         <div class="thumbnail">
+						            <img src="/static/img/ships/3.png" 
+						             >
+						            <div class="caption">
+						                <h3 class="lead2">装甲巡洋舰</h3>
+						                <p class="lead3">消耗1k碎片</p><br />
+						                <p>
+						                    <a href="#" class="btn btn-xs btn-primary" role="button" id='ship3' onclick="getship(3)">
+						                        兑换
+						                    </a> 
+						                </p>
+						            </div>
+						         </div>
+						    </div>
+
+						</div>
+						<div class="row">
+						    
+						    
+						    <div class="col-sm-6 col-md-3">
+						         <div class="thumbnail">
+						            <img src="/static/img/ships/4.png" 
+						             >
+						            <div class="caption">
+						                <h3 class="lead2">战列舰</h3>
+						                <p class="lead3">消耗10k碎片</p><br />
+						                <p>
+						                    <a href="#" class="btn btn-xs btn-primary" role="button" id='ship4' onclick="getship(4)">
+						                        兑换
+						                    </a> 
+						                </p>
+						            </div>
+						         </div>
+						    </div>
+						    <div class="col-sm-6 col-md-3">
+						         <div class="thumbnail">
+						            <img src="/static/img/ships/5.png" 
+						             >
+						            <div class="caption">
+						                <h3 class="lead2">神秘战舰</h3>
+						                <p class="lead3">暂未开放</p><br />
+						                <p>
+						                    <a href="#" class="btn btn-xs btn-primary disabled" role="button" onclick="">
+						                        暂未开放
+						                    </a> 
+						                </p>
+						            </div>
+						         </div>
+						    </div>
+						    
+						</div>
+						<p><a class="popup-modal-dismiss" href="#">返回船坞</a></p>
+					</div>
 					    <br />
 					  
        					
                         <br />
-                        <div class="panel panel-default">
-								<div class="panel-heading">
-									<h4 class="panel-title">
-										<a data-toggle="collapse" data-parent="#accordion" 
-										   href="#collapseB">
-											兑换创世战舰
-										</a>
-									</h4>
-								</div>
-								<div id="collapseB" class="panel-collapse collapse">
-									<div class="panel-body">
-										 <div class="row">
-														    <div class="col-sm-6 col-md-3">
-														         <div class="thumbnail">
-														            <img src="/static/img/ships/0.png" 
-														             >
-														            <div class="caption">
-														                <h3 class="lead2">护卫舰</h3>
-														                <p class="lead3">消耗10碎片</p><br />
-														                <p>
-														                    <a href="#" class="btn btn-xs btn-primary " role="button" id='ship0' onclick="getship(0)">
-														                        兑换
-														                    </a> 
-														                </p>
-														            </div>
-														         </div>
-														    </div>
-														    <div class="col-sm-6 col-md-3">
-														         <div class="thumbnail">
-														            <img src="/static/img/ships/1.png" 
-														             >
-														            <div class="caption">
-														                <h3 class="lead2">驱逐舰</h3>
-														                <p class="lead3">消耗100碎片</p><br />
-														                <p>
-														                    <a href="#" class="btn btn-xs btn-primary" role="button" id='ship1' onclick="getship(1)">
-														                        兑换
-														                    </a> 
-														                </p>
-														            </div>
-														         </div>
-														    </div>
-														    <div class="col-sm-6 col-md-3">
-														         <div class="thumbnail">
-														            <img src="/static/img/ships/2.png" 
-														             >
-														            <div class="caption">
-														                <h3 class="lead2">轻型巡洋舰</h3>
-														                <p class="lead3">消耗500碎片</p><br />
-														                <p>
-														                    <a href="#" class="btn btn-xs btn-primary" role="button" id='ship2' onclick="getship(2)">
-														                        兑换
-														                    </a> 
-														                </p>
-														            </div>
-														         </div>
-														    </div>
-														    <div class="col-sm-6 col-md-3">
-														         <div class="thumbnail">
-														            <img src="/static/img/ships/3.png" 
-														             >
-														            <div class="caption">
-														                <h3 class="lead2">装甲巡洋舰</h3>
-														                <p class="lead3">消耗1k碎片</p><br />
-														                <p>
-														                    <a href="#" class="btn btn-xs btn-primary" role="button" id='ship3' onclick="getship(3)">
-														                        兑换
-														                    </a> 
-														                </p>
-														            </div>
-														         </div>
-														    </div>
-														    
-														</div>
-														<div class="row">
-														    
-														    
-														    <div class="col-sm-6 col-md-3">
-														         <div class="thumbnail">
-														            <img src="/static/img/ships/4.png" 
-														             >
-														            <div class="caption">
-														                <h3 class="lead2">战列舰</h3>
-														                <p class="lead3">消耗10k碎片</p><br />
-														                <p>
-														                    <a href="#" class="btn btn-xs btn-primary" role="button" id='ship4' onclick="getship(4)">
-														                        兑换
-														                    </a> 
-														                </p>
-														            </div>
-														         </div>
-														    </div>
-														    <div class="col-sm-6 col-md-3">
-														         <div class="thumbnail">
-														            <img src="/static/img/ships/5.png" 
-														             >
-														            <div class="caption">
-														                <h3 class="lead2">神秘战舰</h3>
-														                <p class="lead3">暂未开放</p><br />
-														                <p>
-														                    <a href="#" class="btn btn-xs btn-primary disabled" role="button" onclick="">
-														                        暂未开放
-														                    </a> 
-														                </p>
-														            </div>
-														         </div>
-														    </div>
-														    
-														</div>
-									</div>
-								</div>
-							</div>
+                        
+                       
        					<br />
 					   <div class="panel panel-default">
 								<div class="panel-heading">
@@ -246,7 +251,7 @@
 										</a>
 									</h4>
 								</div>
-								<div id="collapseA" class="panel-collapse collapse">
+								<div id="collapseA" class="panel-collapse collapse in">
 									<div class="panel-body">
 										 <input type="friendid" class="form-control" id="friendid" name="friendid" placeholder="输入好友ID为其助攻"><br />
 										 <button  id='assist' type="button" class="btn btn-sm btn-info pull-right" onclick='' >助攻好友</button> 
@@ -263,7 +268,7 @@
 										</a>
 									</h4>
 								</div>
-								<div id="collapseTwo" class="panel-collapse collapse">
+								<div id="collapseTwo" class="panel-collapse collapse in">
 									<div class="panel-body">
 										<ul class="list-group" style="background-color: #f5f5f5">
 										{% for i in recent %}
@@ -279,8 +284,7 @@
 					  
 						
 					</form>
-					<br />
-					<br />
+
                     <div>
 						{% if amwayresult %}
 						     
@@ -303,7 +307,7 @@
 					</p>
                 </div>
 				
-                <div class="col-sm-4 wow fadeInLeftBig"  data-animation-delay="200" style="background-color: #e7e7e7">   
+                <div class="col-sm-4 wow fadeInLeftBig"  id='amaypart' data-animation-delay="200" style="background-color: #e7e7e7">   
                 	 <h3 class="section-heading">
 						首发福利，立得创世战舰
 					</h3>
@@ -312,14 +316,14 @@
 					</p>
                   
                     <p class="lead2">
-						 您的推广ID为：{{amwayid}}
+						 您的用户ID为：{{amwayid}}
 
 					</p>
 
 					
 					<form role="form" >
 					  <div class="form-group">
-					    <label for="AmwayID">邀请您的好友注册凭借此邀请ID注册</label>
+					    <label for="AmwayID">邀请您的好友输入邀请ID注册获得奖励</label>
 					    <textarea id='AmwayID' class="form-control" rows="1"></textarea>
 					    
 					  </div>
@@ -397,6 +401,8 @@
 	<script src="/static/js/script.js"></script>
 	<!-- StikyMenu -->
 	<script src="/static/js/stickUp.min.js"></script>
+	<script src="https://cdn.bootcss.com/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+
  	 <script>
  	 	function copyAID(){
  	 		$('#AmwayID').select();
@@ -420,14 +426,55 @@
 	                          })   
  	 	}
  	 	recent='{{recent}}'
+ 	 	function isMobile() {
+		    var userAgentInfo = navigator.userAgent;
+
+		    var mobileAgents = [ "Android", "iPhone", "SymbianOS", "Windows Phone", "iPad","iPod"];
+
+		    var mobile_flag = false;
+
+		    //根据userAgent判断是否是手机
+		    for (var v = 0; v < mobileAgents.length; v++) {
+		        if (userAgentInfo.indexOf(mobileAgents[v]) > 0) {
+		            mobile_flag = true;
+		            break;
+		        }
+		    }
+
+		     var screen_width = window.screen.width;
+		     var screen_height = window.screen.height;    
+
+		     //根据屏幕分辨率判断是否是手机
+		     if(screen_width < 500 && screen_height < 800){
+		         mobile_flag = true;
+		     }
+
+		     return mobile_flag;
+		}
 		$(function(){
+			$('.popup-modal').magnificPopup({
+				type: 'inline',
+				preloader: false,
+				focus: '#username',
+				modal: true
+			});
+
+			$(document).on('click', '.popup-modal-dismiss', function (e) {
+				e.preventDefault();
+				$.magnificPopup.close();
+			});
 			$('#head').load('/static/head.html', function() {
 			  FlatfyInit();
 			  $('.navbar-default').stickUp();
-
+			  if(isMobile()) {  
+		       // $("#amaypart").hide(); 
+		       if(window.screen.width < 770){
+				$('#amaypart').hide()
+				}
+		    } 
 			});
 			$('#footer').load('/static/footer.html');
-			
+						
 			$('#AmwayID').val({{amwayid}});
 			$('#AmwayURL').val("http://etherwarship.com/"+{{amwayid}})
 			$("#checkin").click(function(){  
@@ -442,6 +489,17 @@
 	                            return true;
 	                          })                
 	            });
+
+			$('.simple-ajax-popup-align-top').magnificPopup({
+				type: 'ajax',
+				alignTop: true,
+				overflowY: 'scroll' // as we know that popup content is tall we set scroll overflow by default to avoid jump
+			});
+
+			$('.simple-ajax-popup').magnificPopup({
+				type: 'ajax'
+			});
+
 			$("#assist").click(function(){  
 					if(!$('#friendid').val())
 						{ alert('请输入好友ID');
@@ -487,8 +545,7 @@
 	</script>
 	
 
-	<!-- Magnific Popup core JS file -->
-	<script src="/static/js/jquery.magnific-popup.js"></script> 
+	
 
 
 

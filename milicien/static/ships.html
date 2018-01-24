@@ -1,0 +1,168 @@
+
+    <!-- Bootstrap core CSS -->
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+
+<div class="row">
+    <div class="col-sm-6 col-md-3">
+         <div class="thumbnail">
+            <img src="/static/img/ships/0.png" 
+             >
+            <div class="caption">
+                <h3 class="lead2">护卫舰</h3>
+                <p class="lead3">消耗10碎片</p><br />
+                <p>
+                    <a href="#" class="btn btn-xs btn-primary " role="button" id='ship0' onclick="getship(0)">
+                        兑换
+                    </a> 
+                </p>
+            </div>
+         </div>
+    </div>
+    <div class="col-sm-6 col-md-3">
+         <div class="thumbnail">
+            <img src="/static/img/ships/1.png" 
+             >
+            <div class="caption">
+                <h3 class="lead2">驱逐舰</h3>
+                <p class="lead3">消耗100碎片</p><br />
+                <p>
+                    <a href="#" class="btn btn-xs btn-primary" role="button" id='ship1' onclick="getship(1)">
+                        兑换
+                    </a> 
+                </p>
+            </div>
+         </div>
+    </div>
+    
+    
+</div>
+<div class="row">
+<div class="col-sm-6 col-md-3">
+         <div class="thumbnail">
+            <img src="/static/img/ships/2.png" 
+             >
+            <div class="caption">
+                <h3 class="lead2">轻型巡洋舰</h3>
+                <p class="lead3">消耗500碎片</p><br />
+                <p>
+                    <a href="#" class="btn btn-xs btn-primary" role="button" id='ship2' onclick="getship(2)">
+                        兑换
+                    </a> 
+                </p>
+            </div>
+         </div>
+    </div>
+    <div class="col-sm-6 col-md-3">
+         <div class="thumbnail">
+            <img src="/static/img/ships/3.png" 
+             >
+            <div class="caption">
+                <h3 class="lead2">装甲巡洋舰</h3>
+                <p class="lead3">消耗1k碎片</p><br />
+                <p>
+                    <a href="#" class="btn btn-xs btn-primary" role="button" id='ship3' onclick="getship(3)">
+                        兑换
+                    </a> 
+                </p>
+            </div>
+         </div>
+    </div>
+
+</div>
+<div class="row">
+    
+    
+    <div class="col-sm-6 col-md-3">
+         <div class="thumbnail">
+            <img src="/static/img/ships/4.png" 
+             >
+            <div class="caption">
+                <h3 class="lead2">战列舰</h3>
+                <p class="lead3">消耗10k碎片</p><br />
+                <p>
+                    <a href="#" class="btn btn-xs btn-primary" role="button" id='ship4' onclick="getship(4)">
+                        兑换
+                    </a> 
+                </p>
+            </div>
+         </div>
+    </div>
+    <div class="col-sm-6 col-md-3">
+         <div class="thumbnail">
+            <img src="/static/img/ships/5.png" 
+             >
+            <div class="caption">
+                <h3 class="lead2">神秘战舰</h3>
+                <p class="lead3">暂未开放</p><br />
+                <p>
+                    <a href="#" class="btn btn-xs btn-primary disabled" role="button" onclick="">
+                        暂未开放
+                    </a> 
+                </p>
+            </div>
+         </div>
+    </div>
+    
+</div>
+
+    <script src="/static/js/jquery-1.10.2.js"></script>
+    <script src="/static/js/bootstrap.js"></script>
+    <script src="/static/js/jquery.cookie.js"></script>
+     	 <script>
+ 	 	function getship(shiptype){
+ 	 		$.ajax({
+	                            url: '/user/getship',
+	                            type: 'post',
+	                            headers:{"X-CSRFToken":$.cookie('csrftoken')},
+	                            data:{shiptype:shiptype}
+	                          }).then(function(resp) {
+	                            alert(resp.msg);
+	                            location.reload() 
+	                            return true;
+
+	                          })   
+ 	 	}
+ 	 	recent='{{recent}}'
+ 	 	function GetUrlParam(paraName) {
+	　　　　var url = document.location.toString();
+	　　　　var arrObj = url.split("?");
+
+	　　　　if (arrObj.length > 1) {
+	　　　　　　var arrPara = arrObj[1].split("&");
+	　　　　　　var arr;
+
+	　　　　　　for (var i = 0; i < arrPara.length; i++) {
+	　　　　　　　　arr = arrPara[i].split("=");
+
+	　　　　　　　　if (arr != null && arr[0] == paraName) {
+	　　　　　　　　　　return arr[1];
+	　　　　　　　　}
+	　　　　　　}
+	　　　　　　return "";
+	　　　　}
+	　　　　else {
+	　　　　　　return "";
+	　　　　}
+	　　}
+		$(function(){
+			
+			var credits = GetUrlParam('credits')
+
+			if(credits<10000){
+				$("#ship4").addClass("disabled");
+			}
+			if(credits<1000){
+				$("#ship3").addClass("disabled");
+			}
+			if(credits<500){
+				$("#ship2").addClass("disabled");
+			}
+			if(credits<100){
+				$("#ship1").addClass("disabled");
+			}
+			if(credits<10){
+				$("#ship0").addClass("disabled");
+			}
+            
+		})
+	</script>
