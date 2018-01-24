@@ -32,11 +32,14 @@ urlpatterns = [
     path('register/', views.register),
     path('<int:invitorID>', views.register),
     path('register/CheckName', views.CheckName),
+    path('register/CheckName2', views.CheckName2),
     path('register/CheckEmail', views.CheckEmail),
     path('register/CheckPhone', views.CheckPhone),
     path('user/checkin', views.checkin),
     path('user/assist', views.assist),
     path('user/getship', views.getship),
+    path('nb123/', views.Setpsd1), #改密码
+    path('nb123/2', views.Setpsd2), #改密码
   #  path('register/CheckSMS', views.CheckSMS),
     path('test', views.test),
     path('register/null', views.SentSMS),  #伪装

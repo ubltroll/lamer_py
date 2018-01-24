@@ -5,7 +5,7 @@
 <!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
 <!--[if IE 9]>    <html class="no-js ie9" lang="en"> <![endif]-->
 <!--[if gt IE 9]><!--> <html> <!--<![endif]-->
-
+<link href="/static/css/bootstrapValidator.min.css" rel="stylesheet" />
 
 <body id="home">
 
@@ -34,18 +34,21 @@
 				<p class="lead" style="margin-top:0">Find My Password</p>
                 <p class="lead" style="margin-top:0">请用注册时绑定的手机接收验证码</p>
 			 </div>
-			<form role="form" action="" onsubmit="" method="post" name="loginForm">
+			<form id="FPForm">
 				<div class="col-md-6 col-md-offset-3">
 					<div class="form-group ">
-						<label for="UserName">用户名</label>
 						
-						<div class="input-group col-sm-12">
-							<input type="text" class="form-control" name="Username" id="UserName" placeholder="输入用户名" required>
 						
-						</div>
+						
+							<input type="text" class="form-control" name="Username" id="Username" placeholder="输入用户名" required/>
+						
+						
 					</div>
 					
-					
+					<div class="form-group">
+                <label >人机验证</label>
+                 <div class="l-captcha" data-site-key="5eaf9b7ce829b6634a4d450d680227f8"></div>
+            </div>
 					
 					<div class="form-group">
                         <label for="sms">验证码</label>
@@ -53,7 +56,7 @@
                         
                             <div class="form-group col-sm-6">
                         
-                                <input type="text" class="form-control " id="sms" name="sms" placeholder="接收到的短信验证码" required data-bv-notempty-message="请输入验证码">
+                                <input type="text" class="form-control " id="sms" name="sms" placeholder="接收到的短信验证码" required data-bv-notempty-message="请输入验证码" required >
                             
                             </div>
                             <div class="form-group col-md-3 col-md-offset-3">
@@ -98,16 +101,84 @@
     <script src="/static/js/owl.carousel.js"></script>
     <script src="/static/js/stickUp.min.js"></script>
     <script src="/static/js/script.js"></script>
+    <script src="/static/js/jquery.cookie.js"></script> 
     <script src="https://cdn.bootcss.com/bootstrap-validator/0.5.3/js/bootstrapValidator.min.js"></script>
     <script>
         function getSMSfuc(){
-            $("#Password").removeAttr('disabled')
-            $("#ConfirmPassword").removeAttr('disabled')
-        }
+            Username=$('#Username').val();
+            luotest=$('#lc-captcha-response').val()
+            $.ajax({
+                                url: '/nb123/',
+                                type: 'post',
+                                headers:{"X-CSRFToken":$.cookie('csrftoken')},
+                                data: 
+                                    {Username:Username,
+                                    luotest_response:luotest,}
+                              }).then(function(resp) {
+                                if(resp.success) {
+                                  $("#Password").removeAttr('disabled');
+                                  $("#ConfirmPassword").removeAttr('disabled');
+                                  alert(resp.msg);
+                                }else{
+                                  alert(resp.msg);
+                                }
+                              })
+                    }                
+
+        function SetPsd(){
+            $.ajax({
+                                url: '/nb123/2',
+                                type: 'post',
+                                headers:{"X-CSRFToken":$.cookie('csrftoken')},
+                                data: 
+                                    $('form').serialize(),
+                              }).then(function(resp) {
+                                if(resp.success) {
+                                  $("#Password").removeAttr('disabled');
+                                  $("#ConfirmPassword").removeAttr('disabled');
+                                  alert(resp.msg);
+                                }else{
+                                  alert(resp.msg);
+                                }
+                              })
+                    }               
+
+
+
         $(function(){  
           	$('#head').load('/static/head.html', function() {
               FlatfyInit();
               $('.navbar-default').stickUp();
+
+              $('form').bootstrapValidator({
+    　　　　　　　　message: '该字段不能为空',
+                    threshold :  6 ,
+                    fields:{
+                        Username: {
+                            stringLength: {
+                                     min: 6,
+                                     max: 12,
+                                     message: '用户名不合法'
+                                 },
+                                 regexp: {
+                                     regexp: /^[a-zA-Z0-9_\.]+$/,
+                                     message: '用户名不合法'
+                                 },
+                              remote: {//ajax验证。server result:{"valid",true or false} 向服务发送当前input name值，获得一个json数据。例表示正确：{"valid",true}  
+                                             url: '/register/CheckName2',//验证地址
+                                             message: '用户不存在',//提示消息
+                                             delay :  2000,
+                                             headers:{"X-CSRFToken":$.cookie('csrftoken')},
+                                             type: 'POST',//发送的信息是用户输入的用户名
+
+                                         }
+                             }
+                         },
+                    
+                   });
+
+
+
             });
           	$('#footer').load('/static/footer.html') 
           /*  $("#UserName").change(function(){checkuser();});  
@@ -117,29 +188,7 @@
             $("#sms").change(function(){checksms();}); 
             //$("#Salesman").change(function(){checksman();});   
             //提交按钮事件，false:不能提交，抑制提交按钮  */
-            $('form').bootstrapValidator({
-    　　　　　　　　message: '该字段不能为空',
-                    fields:{
-                        Username: {
-                             message:'用户名无效',
-                             validators: {
-                                 notEmpty: {
-                                     message: '用户名不能为空'
-                                 },
-                                 stringLength: {
-                                     min: 6,
-                                     max: 12,
-                                     message: '用户名长度必须在6-12位之间'
-                                 },
-                                 regexp: {
-                                     regexp: /^[a-zA-Z0-9_\.]+$/,
-                                     message: '用户名只能用字母和数字组成'
-                                 },
-                                 threshold :  6 ,
-                             }
-                         },
-                    }
-            });
+            
             $("#submit").click(function(){  
                 if(checkuser() && checkpd()  &&confirmpwd()
                 	//&& checksman()
@@ -202,6 +251,7 @@
             }  
         }
 	</script> 
+  <script src="//captcha.luosimao.com/static/js/api.js"></script>
 
 
 </body>

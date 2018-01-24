@@ -123,7 +123,7 @@ def SentSMS(request):
             "response": luotest
             },timeout=3 , verify=False)
     result =  json.loads( resp.content.decode('utf-8') )
-    dic['msg'] = 'wrong captcha'
+    dic['msg'] = '人机校验错误'
     dic['success'] = False
     jstr = json.dumps(result)
     if result['res']!='success':
@@ -163,6 +163,99 @@ def CheckName(request):
     	
     jstr = json.dumps(dic)
     return HttpResponse(jstr, content_type='application/json')
+def CheckName2(request): #取反，找回密码时使用
+    username = request.POST['Username']
+    dic={}
+    dic['valid'] = True
+    try:
+        User.objects.get(username=username)
+    except:
+        dic['valid'] = False
+        
+    jstr = json.dumps(dic)
+    return HttpResponse(jstr, content_type='application/json')
+
+def Setpsd1(request):
+    username = request.POST['Username']
+    dic={}
+    
+    try:
+        user=User.objects.get(username=username)
+
+    except:
+        dic['success'] = False
+        dic['msg']='用户名错误'
+        jstr = json.dumps(dic)
+        return HttpResponse(jstr, content_type='application/json')
+    luotest=request.POST['luotest_response']
+    resp = requests.post("https://captcha.luosimao.com/api/site_verify",
+            #auth=("api_key", "9667e877e20e6380832f6abd6642cfda"),
+            data={
+            "api_key": '9667e877e20e6380832f6abd6642cfda',
+            "response": luotest
+            },timeout=3 , verify=False)
+    result =  json.loads( resp.content.decode('utf-8') )
+    dic['msg'] = '人机校验错误'
+    dic['success'] = False
+    jstr = json.dumps(result)
+    if result['res']!='success':
+        return HttpResponse(jstr, content_type='application/json')
+    phone = user.last_name
+    if phone.isdigit() and len(phone)==11:
+        code=godsays(phone)
+        smstext='您的验证码为'+code+'，请在5分钟内完成注册。【以太战舰】'
+        resp = requests.post("http://sms-api.luosimao.com/v1/send.json",
+            auth=("api", "key-442199e5d02324bc7d1ff2a2f675882e"),
+            data={
+            "mobile": phone,
+            "message": smstext
+            },timeout=3 , verify=False)
+        #result =  json.loads( resp.content )
+        dic['success'] = True
+        dic['msg']='短信已发送至绑定的手机号'
+        jstr = json.dumps(dic)
+        return HttpResponse(jstr, content_type='application/json')
+    dic['msg'] = '未知错误'
+    dic['success'] = False
+    jstr = json.dumps(dic)
+    return HttpResponse(jstr, content_type='application/json')
+    
+def Setpsd2(request):
+    username = request.POST['Username']
+    pd=request.POST['Password']
+    cpd=request.POST['ConfirmPassword']
+    sms=request.POST['sms']
+    dic={}
+    try:
+        user=User.objects.get(username=username)
+        phone = user.last_name
+    except:
+        dic['msg'] = '未知错误'
+        dic['success'] = False
+        jstr = json.dumps(dic)
+        return HttpResponse(jstr, content_type='application/json')
+    if not godjudges(phone,sms):
+        dic['success'] = False
+        dic['msg'] = '短信验证码错误'
+        jstr = json.dumps(dic)
+        return HttpResponse(jstr, content_type='application/json')
+    if pd!=cpd:
+        dic['msg'] = '两次密码不一致'
+        dic['success'] = False
+       
+    else:
+        try:
+            user.set_password(pd)
+            user.save()
+            dic['msg'] = '成功，请用新密码登陆'
+            dic['success'] = True
+        except:
+            dic['msg'] = '未知错误'
+            dic['success'] = False
+
+    jstr = json.dumps(dic)
+    return HttpResponse(jstr, content_type='application/json')
+
 
 def CheckPhone(request):
     phone = request.POST['phone']
