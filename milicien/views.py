@@ -349,7 +349,9 @@ def SignMeUp(request):
             assistancedata.save()
         except:
             dic['bug']=1
-            AmwayID='5801'
+            
+    else:
+        AmwayID='5801'
             
     user = User.objects.create_user(username,email,password)  
     
