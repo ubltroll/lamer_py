@@ -54,7 +54,12 @@
 			<h1 class="h1_home wow fadeIn" data-wow-delay="0.4s">以太战舰</h1>
 			<h3 class="h3_home wow fadeIn" data-wow-delay="0.6s">区块链集换式卡牌游戏</h3>
 			<ul class="list-inline intro-social-buttons">
-				<li><a href="/home/" class="btn  btn-lg mybutton_cyano wow fadeIn" data-wow-delay="0.8s"><span class="network-name">登陆/注册</span></a>
+				{% if not invitorID %}
+						   <li><a href="/home/" class="btn  btn-lg mybutton_cyano wow fadeIn" data-wow-delay="0.8s"><span class="network-name">登陆/注册</span></a>
+				{% else %}
+					 		<li><a href="/register/{{invitorID}}" class="btn  btn-lg mybutton_cyano wow fadeIn" data-wow-delay="0.8s"><span class="network-name">登陆/注册</span></a>
+				{% endif %}
+				
 				</li>
 				<li id="download" ><a href="#downloadlink" class="btn  btn-lg mybutton_standard wow swing wow fadeIn" data-wow-delay="1.2s"><span class="network-name">白皮书</span></a>
 				</li>

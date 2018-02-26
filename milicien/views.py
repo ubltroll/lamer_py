@@ -12,8 +12,8 @@ import requests,datetime
 
 from milicien.models import assistance,Profile
 # Create your views here.
-def index(request):
-    return render(request,'index.html', {'NumForShow': User.objects.count()+5800})
+def index(request,invitorID=''):
+    return render(request,'index.html', {'NumForShow': User.objects.count()+5800,"invitorID":invitorID})
 
 def login1(request):
     if not request.user.is_anonymous:
