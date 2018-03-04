@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
 
-from milicien.models import Profile,assistance
+from milicien.models import Profile,assistance,setting
 
 # Define an inline admin descriptor for Employee model
 # which acts a bit like a singleton
@@ -24,3 +24,7 @@ class AssistanceAdmin(admin.ModelAdmin):
     list_display=('fromuser','touser','time')
 
 admin.site.register(assistance, AssistanceAdmin)
+
+class SettingAdmin(admin.ModelAdmin):
+    list_display=('keyword','value')
+admin.site.register(setting, SettingAdmin)

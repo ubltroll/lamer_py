@@ -1,0 +1,73 @@
+ <!-- FlatFy Theme - Andrea Galanti /-->
+<!doctype html>
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
+<!--[if IE 9]>    <html class="no-js ie9" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!--> <html> <!--<![endif]-->
+
+
+<body id="home">
+
+	<!-- Preloader -->
+	<div id="preloader">
+		<div id="status"></div>
+	</div>
+	
+<div id='head'></div>
+	
+	
+
+
+	<div class="content-section-a">
+
+       <img class="img-responsive " src="/static/img/presell.png"  align="middle" alt="">
+        <!-- /.container -->
+    </div>
+	
+	
+
+	<div id='footer'></div>
+	
+	
+	
+
+
+    <!-- JavaScript -->
+    <script src="/static/js/jquery-1.10.2.js"></script>
+    <script src="/static/js/bootstrap.js"></script>
+	<script src="/static/js/owl.carousel.js"></script>
+	<script src="/static/js/stickUp.min.js"></script>
+	<script src="/static/js/script.js"></script>
+ 	 <script>
+		$(function(){
+			$('#footer').load('/static/footer.html');
+			$('#head').load('/static/head.html', function() {
+			  FlatfyInit();
+			  $('.navbar-default').stickUp();
+		  
+			});
+			
+
+		})
+	</script>
+
+	<!-- StikyMenu -->
+	
+
+
+	<!-- Smoothscroll -->
+
+	<script src="/static/js/wow.min.js"></script>
+	<script>
+	 new WOW().init();
+	</script>
+	<script src="/static/js/classie.js"></script>
+	<!-- Magnific Popup core JS file -->
+	<script src="/static/js/jquery.magnific-popup.js"></script> 
+
+
+
+</body>
+
+</html>

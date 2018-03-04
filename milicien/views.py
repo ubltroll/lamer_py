@@ -10,7 +10,7 @@ import json
 import random
 import requests,datetime
 
-from milicien.models import assistance,Profile
+from milicien.models import assistance,Profile,setting
 # Create your views here.
 def index(request,invitorID=''):
     return render(request,'index.html', {'NumForShow': User.objects.count()+5800,"invitorID":invitorID})
@@ -30,7 +30,7 @@ def register(request,invitorID=''):
 def home(request):
     if(request.user.is_anonymous):
         return HttpResponseRedirect("/index/")
-    AmwayUsers=User.objects.filter(first_name=str(request.user.id+5800))
+    AmwayUsers=User.objects.filter(first_name=str(request.user.profile.uid+5800))
     Amway=[]
     for man in AmwayUsers:
         cellphone=man.last_name
@@ -52,7 +52,7 @@ def home(request):
         ships.append(int(strships[i]))
         shipsnum+=ships[i]
     recent=[]
-    msgs=assistance.objects.filter(touser=request.user.profile.uid)
+    msgs=assistance.objects.filter(touser=request.user.profile.uid+5800)
     for msg in msgs:
         temp=((datetime.datetime.now()-msg.time.replace(tzinfo=None)).days)
         if temp>3:
@@ -68,20 +68,26 @@ def home(request):
                 recent.append(str(temp)+'天前: 签到获得战舰碎片+3')
             else:
                 recent.append(' 今天: 签到获得战舰碎片+3')
+        elif msg.fromuser==2:
+            #temp=((datetime.datetime.now()-msg.time.replace(tzinfo=None)).days)
+            if temp:
+                recent.append(str(temp)+'天前: 更新补偿获得战舰碎片+100')
+            else:
+                recent.append(' 今天: 更新补偿获得战舰碎片+100')
         else:
             try:
-                name=User.objects.get(id=(msg.fromuser-5800)).username
+                name=User.objects.get(uid=(msg.fromuser-5800)).username
             except:
                 name='?'
             #temp=((datetime.datetime.now()-msg.time.replace(tzinfo=None)).days)
             if temp:
-                recent.append(str(temp)+'天前: ID:'+str(msg.fromuser)+'<'+name+'>为您助攻，碎片+3')
+                recent.append(str(temp)+'天前: ID:'+str(msg.fromuser)+'为您助攻，碎片+3')
             else:
-                recent.append(' 今天: ID:'+str(msg.fromuser)+'<'+name+'>为您助攻，碎片+3')
+                recent.append(' 今天: ID:'+str(msg.fromuser)+'为您助攻，碎片+3')
 
     recent.sort()
-    return render(request,'user.html', {'username':request.user.username,'amwayid':request.user.id+5800,
-        'amwayresult':Amway,'num':num,'nickname':request.user.profile.nickname,'checkin':checkin,'credits':request.user.profile.credits,
+    return render(request,'user.html', {'username':request.user.username,'amwayid':request.user.profile.uid+5800,
+        'amwayresult':Amway,'num':num,'checkin':checkin,'credits':request.user.profile.credits,
         'ships':ships,"shipsnum":shipsnum,'assistance':request.user.profile.assistance,'recent':recent,'cooldownh':str(cooldownh),'cooldownm':str(cooldownm)
         })#用户id加5800为推广ID
 
@@ -272,8 +278,8 @@ def CheckPhone(request):
 
 def test(request):
     dic={}
-    uid=request.user.id
-    dic['msg']=uid
+    usrid=request.user.id
+    dic['msg']=usrid
     jstr = json.dumps(dic)
     return HttpResponse(jstr, content_type='application/json')
 
@@ -301,7 +307,7 @@ def LogMeIn(request):
     if user is not None:
         login(request, user)
         dic['success'] = True
-        dic['msg'] = user.id
+        dic['msg'] = user.profile.uid
 
     else:
     	dic['success'] = False
@@ -342,10 +348,10 @@ def SignMeUp(request):
     dic={}
     if AmwayID:
         try:
-            frienduser=User.objects.get(id=(int(AmwayID)-5800))
+            frienduser=User.objects.get(uid=(int(AmwayID)-5800))
             frienduser.profile.credits+=10  #邀请+10
             frienduser.profile.save()
-            assistancedata=assistance.objects.create(fromuser=0,touser=frienduser.profile.uid)
+            assistancedata=assistance.objects.create(fromuser=0,touser=frienduser.profile.uid+5800)
             assistancedata.save()
         except:
             dic['bug']=1
@@ -354,18 +360,20 @@ def SignMeUp(request):
         AmwayID='5801'
             
     user = User.objects.create_user(username,email,password)  
-    
+    water = setting.objects.get(keyword='water').value
     if user is not None:
         if int(AmwayID)>5799:
             user.first_name = str(int(AmwayID)-5800)
         user.last_name = phone
-        #user.profile.uid = int(user.id)
+        user.profile.uid = user.id + water
         user.profile.assistance = 3
-        user.profile.checkin = False
+        #user.profile.checkin = False
         user.profile.ships = '00000'
         user.profile.friend1=0
         user.profile.friend2=0
         user.profile.credits=0
+        user.profile.today=0
+        user.profile.mark=1
         #user.profile.nickname=nickname
         #user.profile.cooldowntime=datetime.datetime.strptime('1815-06-18 17:41:20', '%Y-%m-%d %H:%M:%S')
         
@@ -401,8 +409,9 @@ def checkin(request):
         request.user.profile.friend1=0
         request.user.profile.friend2=0
         request.user.profile.assistance=3
+        request.user.profile.today=0
         request.user.save()
-        assistancedata=assistance.objects.create(fromuser=1,touser=request.user.id+5800)
+        assistancedata=assistance.objects.create(fromuser=1,touser=request.user.profile.uid+5800)
         assistancedata.save()
     else:
         dic['success'] = False
@@ -417,19 +426,22 @@ def assist(request):
     friend = int(request.POST['friend'])
     dic={}
     try:
-        frienduser=User.objects.get(id=(friend-5800))
+        friendprofile=Profile.objects.get(uid=(friend-5800))
     except:
 
         dic['success'] = False
         dic['msg'] = '错误的id'
         jstr = json.dumps(dic)
         return HttpResponse(jstr, content_type='application/json')
-    if friend==request.user.profile.uid :
+    if friend==request.user.profile.uid+5800 :
         dic['success'] = False
         dic['msg'] = '不能助攻自己'
     elif friend==request.user.profile.friend1 or friend==request.user.profile.friend2:
         dic['success'] = False
         dic['msg'] = '今天已经助攻过该好友了'
+    elif friendprofile.today>=30:
+        dic['success'] = False
+        dic['msg'] = '目标用户今日不能获得更多的碎片了'
     else:
         dic['success'] = True
         dic['msg'] = '成功'
@@ -437,10 +449,11 @@ def assist(request):
             dic['success'] = False
             dic['msg'] = '次数用尽'
         else:
-            assistancedata=assistance.objects.create(fromuser=request.user.profile.uid,touser=friend)
+            assistancedata=assistance.objects.create(fromuser=request.user.profile.uid+5800,touser=friend)
             assistancedata.save()
-            frienduser.profile.credits+=3   #一次3点
-            frienduser.save()
+            friendprofile.credits+=3   #一次3点
+            friendprofile.today+=3
+            friendprofile.save()
             if request.user.profile.assistance == 3:
                 request.user.profile.friend1=friend
             elif request.user.profile.assistance == 2:
@@ -481,3 +494,52 @@ def getship(request):
 
     jstr = json.dumps(dic)
     return HttpResponse(jstr, content_type='application/json')
+
+
+def update(request,code):
+    if code==111:     #真假账本
+        version = setting.objects.get(keyword='version')
+        if version.value >= 1:
+            return render(request,'index.html', {'NumForShow': version.value})
+        version.value = 1
+        version.save()
+        usrs=User.objects.all()
+        for usr in usrs:
+            try:
+                usr.profile.uid=usr.id
+                usr.profile.mark=1
+                usr.save()
+            except:
+                continue
+        return render(request,'index.html', {'NumForShow': 111})
+
+@login_required(login_url='/login/') #活动入口
+def act(request,code):
+    if code==3:
+        dic={}
+        dic['success'] = False
+        dic['msg'] = '未知错误'
+        if request.user.profile.mark % 3 == 0:
+            dic['msg'] = '您已经领取过补偿'
+        else:
+            AmwayUsers=User.objects.filter(first_name=str(request.user.profile.uid+5800))
+            if AmwayUsers:
+                request.user.profile.credits+=100
+                request.user.profile.mark*=3
+                request.user.save()
+                assistancedata=assistance.objects.create(fromuser=2,touser=request.user.profile.uid+5800)
+                assistancedata.save()
+                dic['success'] = True
+                dic['msg'] = '补偿已发送至您的账户，请查收'
+            else:
+                dic['msg'] = '抱歉，您不符合领取条件，至少邀请一位好友的用户才能领取补偿'
+
+
+        jstr = json.dumps(dic)
+        return HttpResponse(jstr, content_type='application/json')
+
+def presell(request):
+    return render(request,'presell.html', {})
+
+def notice(request):
+    return render(request,'notice.html', {})

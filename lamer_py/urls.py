@@ -48,5 +48,9 @@ urlpatterns = [
     path('findmypwd/', views.findpsd),
     path('learn/', views.learn),
     path('logout/', views.logout_view),
+    path('update/<int:code>', views.update),
+    path('act/<int:code>', views.act),
+    path('presell/', views.presell),
+    path('notice', views.notice),
 ]
 #+ static(settings.STATIC_URL, document_root = settings.STATIC_ROOT)

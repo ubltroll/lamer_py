@@ -1,0 +1,110 @@
+ <!-- FlatFy Theme - Andrea Galanti /-->
+<!doctype html>
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
+<!--[if IE 9]>    <html class="no-js ie9" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!--> <html> <!--<![endif]-->
+
+
+<body id="home">
+
+	<!-- Preloader -->
+	<div id="preloader">
+		<div id="status"></div>
+	</div>
+	
+<div id='head'></div>
+	
+	
+	
+
+	<div class="content-section-a">
+
+        <div class="container">
+			
+            <div class="row">
+			
+				<div class="col-sm-6 pull-left wow fadeInLeftBig">
+                    <img class="img-responsive " src="/static/img/credits.png" alt="">
+                </div>
+				
+                <div class="col-sm-6 wow fadeInRightBig"  data-animation-delay="200">   
+
+                    <h3 class="section-heading">系统更新补偿公告</h3>
+
+                    <p class="lead">
+						系统机制更新说明：<br/>1.修复了部分显示bug。<br/>2.每天经由好友助攻获得的最大碎片数量调整为30。
+					</p>
+					 <p class="lead">
+						补偿领取时间为2018年3月5日0:00至2018年3月7日0:00，凡具有有效邀请(邀请注册的好友大于等于一位)的用户均可领取100碎片的补偿。
+					</p>
+					 
+					 <p><a id='act3' class="btn btn-embossed btn-primary"  role="button">领取补偿</a> 
+
+					 
+				</div>   
+            </div>
+        </div>
+        <!-- /.container -->
+    </div>
+	
+	
+
+
+	<div id='footer'></div>
+	
+	
+	
+
+
+    <!-- JavaScript -->
+    <script src="/static/js/jquery-1.10.2.js"></script>
+    <script src="/static/js/bootstrap.js"></script>
+	<script src="/static/js/owl.carousel.js"></script>
+	<script src="/static/js/stickUp.min.js"></script>
+	<script src="/static/js/script.js"></script>
+	<script src="/static/js/jquery.cookie.js"></script> 
+ 	 <script>
+		$(function(){
+			$('#footer').load('/static/footer.html');
+			$('#head').load('/static/head.html', function() {
+			  FlatfyInit();
+			  $('.navbar-default').stickUp();
+		  
+			});
+			
+		$("#act3").click(function(){  
+
+	                $.ajax({
+	                            url: '/act/3',
+	                            type: 'post',
+	                            headers:{"X-CSRFToken":$.cookie('csrftoken')},
+	                          }).then(function(resp) {
+	                            alert(resp.msg);
+	                            location.reload() 
+	                            return true;
+	                          })                
+	            });
+		})
+	</script>
+
+	<!-- StikyMenu -->
+	
+
+
+	<!-- Smoothscroll -->
+
+	<script src="/static/js/wow.min.js"></script>
+	<script>
+	 new WOW().init();
+	</script>
+	<script src="/static/js/classie.js"></script>
+	<!-- Magnific Popup core JS file -->
+	<script src="/static/js/jquery.magnific-popup.js"></script> 
+
+
+
+</body>
+
+</html>
