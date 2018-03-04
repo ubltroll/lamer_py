@@ -30,7 +30,9 @@ def register(request,invitorID=''):
 def home(request):
     if(request.user.is_anonymous):
         return HttpResponseRedirect("/index/")
-    AmwayUsers=User.objects.filter(first_name=str(request.user.profile.uid+5800))
+
+    AmwayUsers=User.objects.filter(first_name=str(request.user.profile.uid))
+
     Amway=[]
     for man in AmwayUsers:
         cellphone=man.last_name
