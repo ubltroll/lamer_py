@@ -303,6 +303,13 @@ def CheckEmail(request):
 def LogMeIn(request):
     username = request.POST['UserName']
     password = request.POST['Password']
+    try:
+        User.objects.get(username=username)
+    except:
+        dic['success'] = False
+        dic['msg'] = '用户名不存在'
+        jstr = json.dumps(dic)
+        return HttpResponse(jstr, content_type='application/json')
     user = authenticate(request, username=username,password=password)
     dic={}
     
@@ -314,7 +321,7 @@ def LogMeIn(request):
 
     else:
     	dic['success'] = False
-    	dic['msg'] = 'failed'
+    	dic['msg'] = '用户名与密码不匹配'
 
     jstr = json.dumps(dic)
     return HttpResponse(jstr, content_type='application/json')
