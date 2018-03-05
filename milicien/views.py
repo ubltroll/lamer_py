@@ -525,7 +525,7 @@ def act(request,code):
         if request.user.profile.mark % 3 == 0:
             dic['msg'] = '您已经领取过补偿'
         else:
-            AmwayUsers=User.objects.filter(first_name=str(request.user.profile.uid+5800))
+            AmwayUsers=User.objects.filter(first_name=str(request.user.profile.uid))
             if AmwayUsers:
                 request.user.profile.credits+=100
                 request.user.profile.mark*=3
