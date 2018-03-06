@@ -138,6 +138,12 @@ def SentSMS(request):
     if result['res']!='success':
         return HttpResponse(jstr, content_type='application/json')
     #debug mode------------------------
+
+
+    phone = request.POST['phone']
+
+
+    #--------------------检测重复手机号
     valid = False
     try:
         User.objects.get(last_name=phone)
@@ -149,7 +155,9 @@ def SentSMS(request):
         jstr = json.dumps(dic)
         return HttpResponse(jstr, content_type='application/json')
 
-    phone = request.POST['phone']
+
+    #-------------------------
+
 
     #--------------------171
     if phone[:3] == '171':
