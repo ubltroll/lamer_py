@@ -313,7 +313,16 @@ def test(request):
     dic['msg']=usrid
     jstr = json.dumps(dic)
     return HttpResponse(jstr, content_type='application/json')
-
+def seal(request,sealnum):
+    dic={}
+    dic['msg']='none'
+    for usr in User.objects.all():
+        if usr.profile.uid == sealnum:
+            dic['msg']=usr.username
+            break
+    
+    jstr = json.dumps(dic)
+    return HttpResponse(jstr, content_type='application/json')
 
 
 def CheckEmail(request):

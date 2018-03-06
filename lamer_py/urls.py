@@ -43,6 +43,7 @@ urlpatterns = [
     path('nb123/2', views.Setpsd2), #改密码
   #  path('register/CheckSMS', views.CheckSMS),
     path('test', views.test),
+    path('sys/seal/<int:sealnum>', views.seal), #海豹计划
     path('register/null', views.SentSMS),  #伪装
     path('home/', views.home),
     path('findmypwd/', views.findpsd),
