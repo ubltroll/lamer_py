@@ -138,9 +138,16 @@ def SentSMS(request):
     if result['res']!='success':
         return HttpResponse(jstr, content_type='application/json')
     #debug mode------------------------
-
-
-
+    valid = False
+    try:
+        User.objects.get(last_name=phone)
+    except:
+        valid = True
+    if not valid:
+        dic['msg'] = '手机号重复'
+        dic['success'] = False
+        jstr = json.dumps(dic)
+        return HttpResponse(jstr, content_type='application/json')
 
     phone = request.POST['phone']
 
@@ -148,7 +155,7 @@ def SentSMS(request):
     if phone[:3] == '171':
         dic['msg'] = '系统暂时不允许该号段手机号注册'
         dic['success'] = False
-        jstr = json.dumps(result)
+        jstr = json.dumps(dic)
         return HttpResponse(jstr, content_type='application/json')
     #--------------------------
 
