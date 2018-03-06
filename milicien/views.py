@@ -140,7 +140,20 @@ def SentSMS(request):
     #debug mode------------------------
 
 
+
+
     phone = request.POST['phone']
+
+    #--------------------171
+    if phone[:3] == '171':
+        dic['msg'] = '系统暂时不允许该号段手机号注册'
+        dic['success'] = False
+        jstr = json.dumps(result)
+        return HttpResponse(jstr, content_type='application/json')
+    #--------------------------
+
+
+
     if phone.isdigit() and len(phone)==11:
         code=godsays(phone)
         smstext='您的验证码为'+code+'，请在5分钟内完成注册。【以太战舰】'
