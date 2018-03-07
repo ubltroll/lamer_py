@@ -282,7 +282,15 @@
 						<br />
 					  
 					  
+						<form role="form">
+					  <div class="form-group">
+					    <label for="AmwayURL">或直接由以下链接注册</label>
+					    <textarea id='AmwayURL1' class="form-control" rows="1"></textarea>
+					  </div>
+					  <button  id='copyAmwayURL1' type="button" class=" btn btn-info pull-right" onclick='copyAURL()' >复制推广链接</button>
 						
+					</form>
+
 					</form>
 
                     <div>
@@ -485,6 +493,7 @@
 						
 			$('#AmwayID').val({{amwayid}});
 			$('#AmwayURL').val("http://etherwarship.com/"+{{amwayid}})
+			$('#AmwayURL1').val("http://etherwarship.com/"+{{amwayid}})
 			$("#checkin").click(function(){  
 
 	                $.ajax({
