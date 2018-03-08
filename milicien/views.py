@@ -398,7 +398,7 @@ def SignMeUp(request):
     dic={}
     if AmwayID:
         try:
-            friendprofile=User.objects.profile.get(uid=(int(AmwayID)-5800))
+            friendprofile=Profile.objects.get(uid=(int(AmwayID)-5800))
             friendprofile.credits+=10  #邀请+10
             friendprofile.save()
             assistancedata=assistance.objects.create(fromuser=0,touser=frienduser.profile.uid+5800)
