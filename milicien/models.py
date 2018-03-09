@@ -10,7 +10,7 @@ class Profile(models.Model):
     assistance = models.SmallIntegerField(default=3) 		#剩余邀请次数
     cooldowntime = models.DateTimeField(default=datetime.datetime.strptime('1815-06-18 17:41:20', '%Y-%m-%d %H:%M:%S'))			#24小时重置一次签到和邀请次数
     #checkin = models.BooleanField(default=False) 				#是否签到
-    ships = models.CharField(max_length=5) 			#目前拥有战舰，每一位代表一级别战舰的数量
+    ships = models.CharField(max_length=5,default='00000') 			#目前拥有战舰，每一位代表一级别战舰的数量
     credits = models.PositiveIntegerField(default=0) 				#积分
     friend1 = models.IntegerField(default=0)	
     friend2 = models.IntegerField(default=0)					#不能给同一个ID助攻
