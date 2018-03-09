@@ -408,9 +408,9 @@ def SignMeUp(request):
             
     else:
         AmwayID='5801'
-            
+    water = setting.objects.get(keyword='water').value   
     user = User.objects.create_user(username,email,password)  
-    water = setting.objects.get(keyword='water').value
+    
     if user is not None:
         if int(AmwayID)>5799:
             user.first_name = str(int(AmwayID)-5800)
