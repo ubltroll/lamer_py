@@ -532,9 +532,16 @@ def getship(request):
         dic['msg'] = '余额不足'
         jstr = json.dumps(dic)
         return HttpResponse(jstr, content_type='application/json')
-    request.user.profile.credits -= shipcost[shiptype]
+    
     temp = request.user.profile.ships
     temp = list(temp)
+
+    if int(temp[shiptype])==9:
+        dic['msg'] = '该类型战舰已达到兑换上限，请兑换其他级别的战舰'
+        jstr = json.dumps(dic)
+        return HttpResponse(jstr, content_type='application/json')
+
+    request.user.profile.credits -= shipcost[shiptype]
     temp[shiptype] = str(int(temp[shiptype])+1)
     request.user.profile.ships = str(''.join(temp))
     request.user.profile.save()
