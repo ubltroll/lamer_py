@@ -318,6 +318,13 @@ color: #ECEBEB;
 	background-size: cover;
 }
 
+.blank {
+	padding: 10px 0;
+	color: #f8f8f8;
+	background: url(../img/test.jpg) no-repeat center center;
+	background-size: cover;
+}
+
 /* Animate */
 .rotate{
     -webkit-transition-duration: 0.8s;
