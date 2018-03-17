@@ -595,8 +595,8 @@ def update(request,code):
         return render(request,'index.html', {'NumForShow': 111})
     if code==317: #船进数据库
         version = setting.objects.get(keyword='version')
-        #if version.value >= 2:
-           # return render(request,'index.html', {'NumForShow': version.value})
+        if version.value >= 2:
+           return render(request,'index.html', {'NumForShow': version.value})
         version.value = 2
         version.save()
         profiles=Profile.objects.all()
