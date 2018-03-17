@@ -71,47 +71,29 @@
 					    </tr>
 					  </thead>
 					  <tbody>
-					    {% if ships.0 %}
-						    <tr>
+					    {% for ship in ownedShips %}
+					    <tr>
+					      {% if ship.shipClass == 0 %}
 					      <td>护卫舰</td>
-					      <td>{{ships.0}}</td>
-					      <td>首发珍藏</td>
-					      <td>尚未生成</td>
-					    </tr>
-						{% endif %}
-					    {% if ships.1 %}
-						    <tr>
+					      {% endif %}
+					      {% if ship.shipClass == 1 %}
 					      <td>驱逐舰</td>
-					      <td>{{ships.1}}</td>
-					      <td>首发珍藏</td>
-					      <td>尚未生成</td>
-					    </tr>
-						{% endif %}
-					    {% if ships.2 %}
-						    <tr>
+					      {% endif %}
+					      {% if ship.shipClass == 2 %}
 					      <td>轻型巡洋舰</td>
-					      <td>{{ships.2}}</td>
+					      {% endif %}
+					      {% if ship.shipClass == 3 %}
+					      <td>重型号巡洋舰</td>
+					      {% endif %}
+					      {% if ship.shipClass == 4 %}
+					      <td>无畏战列舰</td>
+					      {% endif %}
+					      
+					      <td>1</td>
 					      <td>首发珍藏</td>
-					      <td>尚未生成</td>
+					      <td>{{ship.cdkey}}</td>
 					    </tr>
-						{% endif %}
-						{% if ships.3 %}
-						    <tr>
-					      <td>装甲巡洋舰</td>
-					      <td>{{ships.3}}</td>
-					      <td>首发珍藏</td>
-					      <td>尚未生成</td>
-					    </tr>
-						{% endif %}
-						{% if ships.4 %}
-						    <tr>
-					      <td>战列舰</td>
-					      <td>{{ships.4}}</td>
-					      <td>首发珍藏</td>
-					      <td>尚未生成</td>
-					    </tr>
-						{% endif %}
-					    
+					    {% endfor %}
 					  </tbody>
 					 
 					</table>

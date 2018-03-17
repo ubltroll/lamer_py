@@ -10,7 +10,7 @@ import json
 import random
 import requests,datetime
 
-from milicien.models import assistance,Profile,setting
+from milicien.models import assistance,Profile,setting,shipCode
 # Create your views here.
 def index(request,invitorID=''):
     water = setting.objects.get(keyword='water').value
@@ -48,12 +48,31 @@ def home(request):
         checkin=0
     
     num=len(Amway)
+
+
+
+
     strships=request.user.profile.ships
     ships=[]
     shipsnum=0
     for i in range(0,5):
         ships.append(int(strships[i]))
         shipsnum+=ships[i]
+
+
+    ownedShips = shipCode.objects.filter(uid=request.user.profile.uid)
+    ownedShip=[]
+    for aship in ownedShips:
+        shipObj = []
+        shipObj.append(aship.shipClass)
+        shipObj.append(aship.cdkey)
+        ownedShip.append(shipObj)
+
+    #ownedShip.sort()
+
+
+
+
     recent=[]
     msgs=assistance.objects.filter(touser=request.user.profile.uid+5800)
     for msg in msgs:
@@ -91,7 +110,7 @@ def home(request):
     recent.sort()
     return render(request,'user.html', {'username':request.user.username,'amwayid':request.user.profile.uid+5800,
         'amwayresult':Amway,'num':num,'checkin':checkin,'credits':request.user.profile.credits,
-        'ships':ships,"shipsnum":shipsnum,'assistance':request.user.profile.assistance,'recent':recent,'cooldownh':str(cooldownh),'cooldownm':str(cooldownm)
+        'ships':ships,"shipsnum":shipsnum,'assistance':request.user.profile.assistance,'recent':recent,'cooldownh':str(cooldownh),'cooldownm':str(cooldownm),'ownedShips':ownedShips
         })#用户id加5800为推广ID
 
 
@@ -532,7 +551,19 @@ def getship(request):
         dic['msg'] = '余额不足'
         jstr = json.dumps(dic)
         return HttpResponse(jstr, content_type='application/json')
-    
+
+    request.user.profile.credits -= shipcost[shiptype]
+    request.user.profile.save()
+    newship=shipCode.objects.create(shipClass=shiptype, uid=request.user.profile.uid,cdkey='not released')
+    newship.save()
+    dic['success'] = True
+    dic['msg'] = '成功'
+
+
+    jstr = json.dumps(dic)
+    return HttpResponse(jstr, content_type='application/json')
+
+''' 
     temp = request.user.profile.ships
     temp = list(temp)
 
@@ -545,14 +576,7 @@ def getship(request):
     temp[shiptype] = str(int(temp[shiptype])+1)
     request.user.profile.ships = str(''.join(temp))
     request.user.profile.save()
-    dic['success'] = True
-    dic['msg'] = '成功'
-
-
-    jstr = json.dumps(dic)
-    return HttpResponse(jstr, content_type='application/json')
-
-
+'''
 def update(request,code):
     if code==111:     #真假账本
         version = setting.objects.get(keyword='version')
@@ -569,6 +593,27 @@ def update(request,code):
             except:
                 continue
         return render(request,'index.html', {'NumForShow': 111})
+    if code==317: #船进数据库
+        version = setting.objects.get(keyword='version')
+        #if version.value >= 2:
+           # return render(request,'index.html', {'NumForShow': version.value})
+        version.value = 2
+        version.save()
+        profiles=Profile.objects.all()
+        for pro in profiles:
+            try:
+                ships=pro.ships
+            except:
+                continue
+            if not ships:
+                continue
+            for i in range(0,5):
+                shipsnum = int(ships[i])
+                for j in range(0,shipsnum):
+                    newship=shipCode.objects.create(uid=pro.uid,shipClass=i,cdkey='not released')
+                    newship.save()
+            
+        return render(request,'index.html', {'NumForShow': 317})
 
 @login_required(login_url='/login/') #活动入口
 def act(request,code):

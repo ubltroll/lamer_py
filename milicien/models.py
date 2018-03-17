@@ -27,6 +27,12 @@ class setting(models.Model):
     value = models.IntegerField(default=0)
 
 
+class shipCode(models.Model):
+    uid = models.IntegerField()
+    shipClass = models.IntegerField()
+    cdkey = models.CharField(max_length=30,default='0')
+
+
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
