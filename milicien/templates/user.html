@@ -8,7 +8,9 @@
 <link rel="stylesheet" href="/static/css/magnific-popup.css">
 <!-- jQuery 1.7.2+ or Zepto.js 1.0+ -->
 
+<!-- Custom CSS-->
 
+<link href="/static/css/general.css" rel="stylesheet">
 <!-- Magnific Popup core JS file -->
 
 
@@ -20,11 +22,24 @@
 	</div>
 	
 	<div id='head'></div>
-	
-	
-	<div class="content-section-a">
 
-        <div class="container">
+
+	<div class="blank" style="padding-top:10px">
+		<div class="container padding-top:10px">
+			<div class="row" onclick="location.href='/presell/';">
+				<div class="col-md-6 col-md-offset-3 text-center wrap_title">
+				<h2 style="color:#34495e;font-size: 3.0em; -webkit-text-stroke-width:1px;-webkit-text-stroke-color:#ffffff; font-family: SimHei；">双重预购福利</h2>
+				<p class="lead2" style="color:#34495e; -webkit-text-stroke-width:1px;-webkit-text-stroke-color:#ffffff; font-family: SimHei；">预充HNP满就送创世战舰，充值排行榜前列可得至尊无畏舰</p>
+			 </div>
+			</div>
+		</div>
+	</div>
+	
+
+
+	<div class="content-section-a" style="padding-top:10px">
+
+        <div class="container" >
 			
             <div class="row">
 			
@@ -56,47 +71,29 @@
 					    </tr>
 					  </thead>
 					  <tbody>
-					    {% if ships.0 %}
-						    <tr>
+					    {% for ship in ownedShips %}
+					    <tr>
+					      {% if ship.shipClass == 0 %}
 					      <td>护卫舰</td>
-					      <td>{{ships.0}}</td>
-					      <td>首发珍藏</td>
-					      <td>尚未生成</td>
-					    </tr>
-						{% endif %}
-					    {% if ships.1 %}
-						    <tr>
+					      {% endif %}
+					      {% if ship.shipClass == 1 %}
 					      <td>驱逐舰</td>
-					      <td>{{ships.1}}</td>
-					      <td>首发珍藏</td>
-					      <td>尚未生成</td>
-					    </tr>
-						{% endif %}
-					    {% if ships.2 %}
-						    <tr>
+					      {% endif %}
+					      {% if ship.shipClass == 2 %}
 					      <td>轻型巡洋舰</td>
-					      <td>{{ships.2}}</td>
+					      {% endif %}
+					      {% if ship.shipClass == 3 %}
+					      <td>重型巡洋舰</td>
+					      {% endif %}
+					      {% if ship.shipClass == 4 %}
+					      <td>无畏战列舰</td>
+					      {% endif %}
+					      
+					      <td>1</td>
 					      <td>首发珍藏</td>
-					      <td>尚未生成</td>
+					      <td>{{ship.cdkey}}</td>
 					    </tr>
-						{% endif %}
-						{% if ships.3 %}
-						    <tr>
-					      <td>装甲巡洋舰</td>
-					      <td>{{ships.3}}</td>
-					      <td>首发珍藏</td>
-					      <td>尚未生成</td>
-					    </tr>
-						{% endif %}
-						{% if ships.4 %}
-						    <tr>
-					      <td>战列舰</td>
-					      <td>{{ships.4}}</td>
-					      <td>首发珍藏</td>
-					      <td>尚未生成</td>
-					    </tr>
-						{% endif %}
-					    
+					    {% endfor %}
 					  </tbody>
 					 
 					</table>
