@@ -25,7 +25,7 @@ SECRET_KEY = '4#t#u)65tdmyp1knk10m_qq6)!rim8=y06)ruh80d#wd(6sk(e'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost','127.0.0.1','[:: 1]','.etherwarship.com','ec2-13-113-237-251.ap-northeast-1.compute.amazonaws.com','13.113.237.251','128.199.217.15']
+ALLOWED_HOSTS = ['localhost','127.0.0.1','[:: 1]','.etherwarship.com','ec2-13-113-237-251.ap-northeast-1.compute.amazonaws.com','13.113.237.251','128.199.217.15'，'188.166.127.70']
 
 
 # Application definition
