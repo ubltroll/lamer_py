@@ -93,9 +93,9 @@ def home(request):
         elif msg.fromuser==2:
             #temp=((datetime.datetime.now()-msg.time.replace(tzinfo=None)).days)
             if temp:
-                recent.append(str(temp)+'天前: 更新补偿获得战舰碎片+100')
+                recent.append(str(temp)+'天前: 更新补偿获得战舰碎片')
             else:
-                recent.append(' 今天: 更新补偿获得战舰碎片+100')
+                recent.append(' 今天: 更新补偿获得战舰碎片')
         else:
             try:
                 name=User.objects.get(uid=(msg.fromuser-5800)).username
