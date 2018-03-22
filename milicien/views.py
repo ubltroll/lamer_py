@@ -648,7 +648,7 @@ def act(request,code):
         else:
             AmwayUsers=User.objects.filter(first_name=str(request.user.profile.uid))
             if AmwayUsers:
-                request.user.profile.credits+=5
+                request.user.profile.credits+=50
                 request.user.profile.mark*=7
                 request.user.save()
                 assistancedata=assistance.objects.create(fromuser=2,touser=request.user.profile.uid+5800)

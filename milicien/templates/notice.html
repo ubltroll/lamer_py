@@ -15,6 +15,36 @@
 	</div>
 	
 <div id='head'></div>
+<div class="content-section-a">
+
+        <div class="container">
+			
+            <div class="row">
+			
+				<div class="col-sm-6 pull-left wow fadeInLeftBig">
+                    <img class="img-responsive " src="/static/img/credits.png" alt="">
+                </div>
+				
+                <div class="col-sm-6 wow fadeInRightBig"  data-animation-delay="200">   
+
+                    <h3 class="section-heading">2018年3月22日回档公告</h3>
+
+                    <p class="lead">
+						由于3月21日的更新补偿发放过程中服务器受到不明攻击，导致部分用户获取碎片有误，经过紧急处置现已恢复正常，并回档至3月22日中午12点整，受到影响的玩家可以领取50碎片的维护补偿，给您造成的不便敬请谅解。今后我们会增加数据库备份频率，同时加紧完成信息上链工作。
+					</p>
+					 <p class="lead">
+						补偿领取时间为2018年3月22日22:30至2018年3月23日15:00，凡具有有效邀请(邀请注册的好友大于等于一位)的用户均可领取50碎片的补偿。
+					</p>
+					 
+					 <p><a id='act7' class="btn btn-embossed btn-primary "  role="button">领取补偿</a> 
+
+					 
+				</div>   
+            </div>
+        </div>
+        <!-- /.container -->
+    </div>
+
 	<div class="content-section-a">
 
         <div class="container">
@@ -27,7 +57,7 @@
 				
                 <div class="col-sm-6 wow fadeInRightBig"  data-animation-delay="200">   
 
-                    <h3 class="section-heading">2018年3月22日服务器维护公告</h3>
+                    <h3 class="section-heading">2018年3月21日服务器维护公告</h3>
 
                     <p class="lead">
 						以太战舰团队将于北京时间3月21日23：00进行服务器维护，由于突发情况导致维护时间超出预计，目前系统已恢复正常工作，特此公告。玩家可以领取5碎片的维护补偿，给您造成的不便敬请谅解。
@@ -36,7 +66,7 @@
 						补偿领取时间为2018年3月22日12:00至2018年3月25日0:00，凡具有有效邀请(邀请注册的好友大于等于一位)的用户均可领取5碎片的补偿。
 					</p>
 					 
-					 <p><a id='act7' class="btn btn-embossed btn-primary "  role="button">领取补偿</a> 
+					 <p><a id='act3' class="btn btn-embossed btn-primary "  role="button">领取补偿</a> 
 
 					 
 				</div>   
@@ -131,10 +161,22 @@
 		  
 			});
 			
-		$("#act7").click(function(){  
+		$("#act3").click(function(){  
 
 	                $.ajax({
 	                            url: '/act/3',
+	                            type: 'post',
+	                            headers:{"X-CSRFToken":$.cookie('csrftoken')},
+	                          }).then(function(resp) {
+	                            alert(resp.msg);
+	                            location.reload() 
+	                            return true;
+	                          })                
+	            });
+		$("#act7").click(function(){  
+
+	                $.ajax({
+	                            url: '/act/7',
 	                            type: 'post',
 	                            headers:{"X-CSRFToken":$.cookie('csrftoken')},
 	                          }).then(function(resp) {
