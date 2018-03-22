@@ -621,13 +621,35 @@ def act(request,code):
         dic={}
         dic['success'] = False
         dic['msg'] = '未知错误'
-        if request.user.profile.mark % 5 == 0:
+        if request.user.profile.mark % 11 == 0:
             dic['msg'] = '您已经领取过补偿'
         else:
             AmwayUsers=User.objects.filter(first_name=str(request.user.profile.uid))
             if AmwayUsers:
-                request.user.profile.credits+=100
-                request.user.profile.mark*=5
+                request.user.profile.credits+=5
+                request.user.profile.mark*=11
+                request.user.save()
+                assistancedata=assistance.objects.create(fromuser=2,touser=request.user.profile.uid+5800)
+                assistancedata.save()
+                dic['success'] = True
+                dic['msg'] = '补偿已发送至您的账户，请查收'
+            else:
+                dic['msg'] = '抱歉，您不符合领取条件，至少邀请一位好友的用户才能领取补偿'
+
+
+        jstr = json.dumps(dic)
+        return HttpResponse(jstr, content_type='application/json')
+    if code==7:
+        dic={}
+        dic['success'] = False
+        dic['msg'] = '未知错误'
+        if request.user.profile.mark % 7 == 0:
+            dic['msg'] = '您已经领取过补偿'
+        else:
+            AmwayUsers=User.objects.filter(first_name=str(request.user.profile.uid))
+            if AmwayUsers:
+                request.user.profile.credits+=5
+                request.user.profile.mark*=7
                 request.user.save()
                 assistancedata=assistance.objects.create(fromuser=2,touser=request.user.profile.uid+5800)
                 assistancedata.save()
