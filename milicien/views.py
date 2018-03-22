@@ -621,13 +621,13 @@ def act(request,code):
         dic={}
         dic['success'] = False
         dic['msg'] = '未知错误'
-        if request.user.profile.mark % 5 == 0:
+        if request.user.profile.mark % 7 == 0:
             dic['msg'] = '您已经领取过补偿'
         else:
             AmwayUsers=User.objects.filter(first_name=str(request.user.profile.uid))
             if AmwayUsers:
-                request.user.profile.credits+=100
-                request.user.profile.mark*=5
+                request.user.profile.credits+=5
+                request.user.profile.mark*=7
                 request.user.save()
                 assistancedata=assistance.objects.create(fromuser=2,touser=request.user.profile.uid+5800)
                 assistancedata.save()
