@@ -15,7 +15,35 @@
 	</div>
 	
 <div id='head'></div>
-	
+	<div class="content-section-a">
+
+        <div class="container">
+			
+            <div class="row">
+			
+				<div class="col-sm-6 pull-left wow fadeInLeftBig">
+                    <img class="img-responsive " src="/static/img/credits.png" alt="">
+                </div>
+				
+                <div class="col-sm-6 wow fadeInRightBig"  data-animation-delay="200">   
+
+                    <h3 class="section-heading">2018年3月22日服务器维护公告</h3>
+
+                    <p class="lead">
+						以太战舰团队将于北京时间3月21日23：00进行服务器维护，由于突发情况导致维护时间超出预计，目前系统已恢复正常工作，特此公告。玩家可以领取5碎片的维护补偿，给您造成的不便敬请谅解。
+					</p>
+					 <p class="lead">
+						补偿领取时间为2018年3月22日12:00至2018年3月25日0:00，凡具有有效邀请(邀请注册的好友大于等于一位)的用户均可领取100碎片的补偿。
+					</p>
+					 
+					 <p><a id='act7' class="btn btn-embossed btn-primary "  role="button">领取补偿</a> 
+
+					 
+				</div>   
+            </div>
+        </div>
+        <!-- /.container -->
+    </div>
 	
 	<div class="content-section-b">
 
@@ -69,7 +97,7 @@
 						补偿领取时间为2018年3月8日17:00至2018年3月10日0:00，凡具有有效邀请(邀请注册的好友大于等于一位)的用户均可领取100碎片的补偿。
 					</p>
 					 
-					 <p><a id='act3' class="btn btn-embossed btn-primary disabled"  role="button">补偿发放已结束</a> 
+					 <p><a id='act2ed' class="btn btn-embossed btn-primary disabled"  role="button">补偿发放已结束</a> 
 
 					 
 				</div>   
@@ -103,10 +131,10 @@
 		  
 			});
 			
-		$("#act3").click(function(){  
+		$("#act7").click(function(){  
 
 	                $.ajax({
-	                            url: '/act/3',
+	                            url: '/act/7',
 	                            type: 'post',
 	                            headers:{"X-CSRFToken":$.cookie('csrftoken')},
 	                          }).then(function(resp) {
