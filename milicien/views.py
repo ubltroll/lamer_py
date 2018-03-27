@@ -9,7 +9,7 @@ from django.http import HttpResponseRedirect
 import json
 import random
 import requests,datetime
-
+from web3 import Web3
 from milicien.models import assistance,Profile,setting,shipCode
 # Create your views here.
 def index(request,invitorID=''):
@@ -61,12 +61,7 @@ def home(request):
 
 
     ownedShips = shipCode.objects.filter(uid=request.user.profile.uid)
-    ownedShip=[]
-    for aship in ownedShips:
-        shipObj = []
-        shipObj.append(aship.shipClass)
-        shipObj.append(aship.cdkey)
-        ownedShip.append(shipObj)
+    
 
     #ownedShip.sort()
 
@@ -556,6 +551,8 @@ def getship(request):
     request.user.profile.save()
     newship=shipCode.objects.create(shipClass=shiptype, uid=request.user.profile.uid,cdkey='not released')
     newship.save()
+    newship.cdkey=str(Web3.toInt(Web3.soliditySha3(['uint256', 'uint256', 'uint256'], [newship.shipClass, newship.id, 958]))%958958)
+    newship.save()
     dic['success'] = True
     dic['msg'] = '成功'
 
@@ -614,6 +611,21 @@ def update(request,code):
                     newship.save()
             
         return render(request,'index.html', {'NumForShow': 317})
+    if code==327: #生成cdkey
+        version = setting.objects.get(keyword='version')
+        if version.value >= 3:
+           return render(request,'index.html', {'NumForShow': version.value})
+        
+        _ships=shipCode.objects.all()
+        for _s in _ships:
+            _s.cdkey=str(Web3.toInt(Web3.soliditySha3(['uint256', 'uint256', 'uint256'], [_s.shipClass, _s.id, 958]))%958958)
+
+            _s.save()
+
+
+        version.value = 3
+        version.save()
+        return render(request,'index.html', {'NumForShow': 327})
 
 @login_required(login_url='/login/') #活动入口
 def act(request,code):
