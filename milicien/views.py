@@ -76,9 +76,9 @@ def home(request):
             continue
         if msg.fromuser==0:
             if temp:
-                recent.append(str(temp)+'天前: 邀请好友注册碎片+10')
+                recent.append(str(temp)+'天前: 邀请好友注册碎片')
             else:
-                recent.append(' 今天: 邀请好友注册碎片+10')
+                recent.append(' 今天: 邀请好友注册碎片')
         elif msg.fromuser==1:
             #temp=((datetime.datetime.now()-msg.time.replace(tzinfo=None)).days)
             if temp:
@@ -413,7 +413,7 @@ def SignMeUp(request):
     if AmwayID:
         try:
             friendprofile=Profile.objects.get(uid=(int(AmwayID)-5800))
-            friendprofile.credits+=10  #邀请+10
+            friendprofile.credits+=3  #邀请+10 ->3
             friendprofile.save()
             assistancedata=assistance.objects.create(fromuser=0,touser=friendprofile.uid+5800)
             assistancedata.save()
@@ -503,7 +503,7 @@ def assist(request):
     elif friend==request.user.profile.friend1 or friend==request.user.profile.friend2:
         dic['success'] = False
         dic['msg'] = '今天已经助攻过该好友了'
-    elif friendprofile.today>=30:
+    elif friendprofile.today>=10:
         dic['success'] = False
         dic['msg'] = '目标用户今日不能获得更多的碎片了'
     else:
@@ -546,6 +546,30 @@ def getship(request):
         dic['msg'] = '余额不足'
         jstr = json.dumps(dic)
         return HttpResponse(jstr, content_type='application/json')
+
+
+    try:
+        shipCode.objects.get(shipClass=shiptype, uid=request.user.profile.uid)
+
+        dic['msg'] = '该类型战舰已达到兑换上限，请兑换其他级别的战舰'
+        jstr = json.dumps(dic)
+        return HttpResponse(jstr, content_type='application/json')
+    except Exception as e:
+        1#doing nothing
+
+    temp = request.user.profile.ships
+    temp = list(temp)
+
+    if int(temp[shiptype])!=0:
+        dic['msg'] = '该类型战舰已达到兑换上限，请兑换其他级别的战舰'
+        jstr = json.dumps(dic)
+        return HttpResponse(jstr, content_type='application/json')
+
+    
+    temp[shiptype] = str(int(temp[shiptype])+1)
+    request.user.profile.ships = str(''.join(temp))
+    
+
 
     request.user.profile.credits -= shipcost[shiptype]
     request.user.profile.save()

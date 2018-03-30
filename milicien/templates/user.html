@@ -100,13 +100,13 @@
 					 {% if not shipsnum %}
 						    <p class="pull-right"> <i>您还没有任何战舰，获取战舰碎片以兑换首发战舰</i></p>
 					 {% else %}
-					 		 <p class="pull-right"> <i>正式上线后将统一生成 cd-key，作为换取区块链卡牌的唯一凭据</i></p>
+					 		 <p class="pull-right"> <i>请牢记您的序列码和识别码，作为换取区块链卡牌的唯一凭据</i></p>
 					{% endif %}
 					<br />
 					<br />
 					<ul >
 					
-					    <li ><i class="glyphicon glyphicon-bullhorn"></i> 推广期间每邀请1位好友注册可获得10个战舰碎片</li>
+					    <li ><i class="glyphicon glyphicon-bullhorn"></i> 推广期间每邀请1位好友注册可获得3个战舰碎片</li>
 					    <li ><i class="glyphicon glyphicon-bullhorn"></i> 推广期间每隔24小时获得3次帮助好友获得碎片的机会 (每次3个碎片，次数不累加)</li>
 					    <li ><i class="glyphicon glyphicon-bullhorn"></i> 推广期间每隔24小时可以领取3个战舰碎片，并重置助攻好友次数</li>
 					    <li ><i class="glyphicon glyphicon-bullhorn"></i> 游戏上线前充值即送战舰，充值排行榜前列更有豪华战舰</li>
@@ -139,8 +139,8 @@
 						                <h3 class="lead2">护卫舰</h3>
 						                <p class="lead3">消耗10碎片</p><br />
 						                <p>
-						                    <a href="#" class="btn btn-xs btn-primary disabled" role="button" id='ship0' onclick="">
-						                        发放完毕
+						                    <a href="#" class="btn btn-xs btn-primary" role="button" id='ship0' onclick="getship(1)">
+						                        兑换
 						                    </a> 
 						                </p>
 						            </div>
@@ -356,7 +356,7 @@
 
 					<br/><br/><br/>
 					<p class="lead2">
-						-每邀请一位好友注册游戏即可获得10个战舰碎片。
+						-每邀请一位好友注册游戏即可获得3个战舰碎片。
 					</p>
 					<p class="lead2">
 						-每日签到即可领取3个战舰碎片。
