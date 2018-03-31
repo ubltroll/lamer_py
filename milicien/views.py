@@ -548,14 +548,14 @@ def getship(request):
         return HttpResponse(jstr, content_type='application/json')
 
 
-    try:
-        shipCode.objects.get(shipClass=shiptype, uid=request.user.profile.uid)
+    # try:
+    #     shipCode.objects.get(shipClass=shiptype, uid=request.user.profile.uid)
 
-        dic['msg'] = '该类型战舰已达到兑换上限，请兑换其他级别的战舰'
-        jstr = json.dumps(dic)
-        return HttpResponse(jstr, content_type='application/json')
-    except Exception as e:
-        1#doing nothing
+    #     dic['msg'] = '该类型战舰已达到兑换上限，请兑换其他级别的战舰'
+    #     jstr = json.dumps(dic)
+    #     return HttpResponse(jstr, content_type='application/json')
+    # except Exception as e:
+    #     1#doing nothing
 
     temp = request.user.profile.ships
     temp = list(temp)
