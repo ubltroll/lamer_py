@@ -11,6 +11,7 @@ import random
 import requests,datetime
 from web3 import Web3
 from milicien.models import assistance,Profile,setting,shipCode
+from django.contrib.admin.views.decorators import staff_member_required
 # Create your views here.
 def index(request,invitorID=''):
     water = setting.objects.get(keyword='water').value
@@ -703,3 +704,30 @@ def presell(request):
 
 def notice(request):
     return render(request,'notice.html', {})
+
+
+def AddShip(request):
+    dic={}
+    dic['success'] = False
+    dic['msg'] = '未知错误'
+    shiptype=int(request.POST['shiptype'])
+    uid=int(request.POST['uid'])
+    try:
+        Profile.objects.get(uid=uid)
+    except:
+        dic['msg'] = '找不到这个uid'
+        jstr = json.dumps(dic)
+        return HttpResponse(jstr, content_type='application/json')
+    newship=shipCode.objects.create(shipClass=shiptype, uid=uid,cdkey='not released')
+    newship.save()
+    newship.cdkey=str(Web3.toInt(Web3.soliditySha3(['uint256', 'uint256', 'uint256'], [newship.shipClass, newship.id, 958]))%958958)
+    newship.save()
+    dic['msg'] = '成功'
+    dic['success'] = True
+    
+    jstr = json.dumps(dic)
+    return HttpResponse(jstr, content_type='application/json')
+
+@staff_member_required
+def ubl(request):
+    return render(request,'ubl.html', {})

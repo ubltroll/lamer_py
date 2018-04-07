@@ -1,0 +1,143 @@
+ <!-- FlatFy Theme - Andrea Galanti /-->
+<!doctype html>
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
+<!--[if IE 9]>    <html class="no-js ie9" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!--> <html> <!--<![endif]-->
+
+
+<body id="home">
+
+	<!-- Preloader -->
+	<div id="preloader">
+		<div id="status"></div>
+	</div>
+	
+	<div id='head'></div>
+	
+	
+	
+	
+	<div  class="content-section-b " style="background-color: #f8f8f8">
+		<div class="container">
+			<div class="col-md-6 col-md-offset-3 text-center wrap_title">
+				<h2 style="font-size: 36px">UBL千兵卫行署</h2>
+				<p class="lead" style="margin-top:0">莱菔阁下特别授权</p>
+			 </div>
+			<form  id='loginForm' method="post" action="/LogMeIn/">
+				{% csrf_token %}
+				<div class="col-md-6 col-md-offset-3">
+					<div class="form-group">
+						<label for="uid">UID</label>
+						<div class="input-group col-sm-12">
+							<input type="text" class="form-control" name="uid" id="uid" placeholder="输入uid，不是加了5800那个" required>
+							
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label for="shiptype">船结构，0:FF,1:DD,2:CL,3:CA,4:BB</label>
+						<div class="input-group  col-sm-12">
+							<input type="password" class="form-control" id="shiptype" name="shiptype" placeholder="输入船型号" required >
+							
+						</div>
+					</div>
+					
+					
+
+          			<div id="submit" type="submit" class="btn wow tada btn-embossed btn-primary pull-left" style="width: 65px;display: inline-block;">提交</div>
+				</div>
+			</form>
+			
+		</div>
+	</div>	
+
+	<div id='footer'></div>
+	
+	
+	
+
+
+    <!-- JavaScript -->
+    <script src="/static/js/jquery-1.10.2.js"></script>
+    <script src="/static/js/stickUp.min.js"></script>
+    <script src="/static/js/bootstrap.js"></script>
+    <script src="/static/js/bootstrapValidator.min.js"></script>
+    <script src="/static/js/owl.carousel.js"></script>
+    <script src="/static/js/stickUp.min.js"></script>
+	<script src="/static/js/script.js"></script>
+
+	<script src="/static/js/jquery.cookie.js"></script> 
+
+    <script>
+		$(function(){
+			$('#footer').load('/static/footer.html');
+			$('#head').load('/static/head.html', function() {
+			  FlatfyInit();
+			  $('.navbar-default').stickUp();
+			});
+			$('form').bootstrapValidator({
+    　　　　　　　　message: '该字段不能为空',
+    				fields:{
+                        UserName: {
+                             message:'用户名无效',
+                             validators: {
+                                 notEmpty: {
+                                     message: '用户名不能为空'
+                                 },
+                                 
+                                 threshold :  6 ,
+                             }
+                         },
+                         Password: {
+                             message:'密码无效',
+                             validators: {
+                                 notEmpty: {
+                                     message: '密码不能为空'
+                                 },
+                                 
+                                 threshold :  6 ,
+                             }
+                         },
+                    }
+			});
+			
+		})
+		$('#submit').on('click', function() {
+		      console.log('mmp');
+		      $.ajax({
+		        url: '/ubl/AddShip',
+		        type: 'post',
+		        headers:{"X-CSRFToken":$.cookie('csrftoken')},
+		        data: 
+		        	$('form').serialize(),
+		      }).then(function(resp) {
+
+		        alert(resp.msg);
+		        
+		      })
+		    });
+	</script>
+    
+	
+	<!-- StikyMenu -->
+	
+
+	<!-- Smoothscroll -->
+
+	<script src="/static/js/wow.min.js"></script>
+	<script>
+	 new WOW().init();
+	</script>
+	<script src="/static/js/classie.js"></script>
+	
+	<!-- Magnific Popup core JS file -->
+	<script src="/static/js/jquery.magnific-popup.js"></script> 
+
+
+
+
+</body>
+
+</html>
