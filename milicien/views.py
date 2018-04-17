@@ -413,9 +413,9 @@ def SignMeUp(request):
     dic={}
     if AmwayID:
         try:
-            friendprofile=Profile.objects.get(uid=(int(AmwayID)-5800))
-            friendprofile.credits+=3  #邀请+10 ->3
-            friendprofile.save()
+            #friendprofile=Profile.objects.get(uid=(int(AmwayID)-5800))
+            #friendprofile.credits+=3  #邀请+10 ->3 
+            #friendprofile.save()
             assistancedata=assistance.objects.create(fromuser=0,touser=friendprofile.uid+5800)
             assistancedata.save()
         except:
