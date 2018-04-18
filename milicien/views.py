@@ -651,6 +651,20 @@ def update(request,code):
         version.value = 3
         version.save()
         return render(request,'index.html', {'NumForShow': 327})
+    if code==417: #生成cdkey
+        
+        _ships=shipCode.objects.all()
+        for _s in _ships:
+            if _s.cdkey == 'Nauty boy':
+                continue
+            _s.cdkey=str(Web3.toInt(Web3.soliditySha3(['uint256', 'uint256', 'uint256'], [_s.shipClass, _s.id, 958]))%99958958)
+
+            _s.save()
+
+
+        version.value = 3
+        version.save()
+        return render(request,'index.html', {'NumForShow': 417})
 
 @login_required(login_url='/login/') #活动入口
 def act(request,code):
@@ -734,6 +748,8 @@ def ubl(request):
 
 @staff_member_required
 def kgb(request):
+    class name:
+        pass
     namelist = dict()
     names=[]
     for usr in User.objects.all():
@@ -749,10 +765,13 @@ def kgb(request):
                     names.append(int(usr.first_name))
         except:
             continue
-    n1=[]
+    n2=[]
     for i in namelist:
         if namelist[i] >= 10:
-            n1.append(i)
+            ni=name()
+            ni.uid=i
+            ni.num=namelist[i]
+            n2.append(ni)
     badships=[]
 
     for i in names:
@@ -760,7 +779,7 @@ def kgb(request):
             badships.append(ship)
 
 
-    return render(request,'kgb.html', {'nums':len(names), 'names':names, 'namelist':namelist, 'shipnum':len(badships), 'Ships':badships})
+    return render(request,'kgb.html', {'nums':len(names), 'names':names, 'namelist':n2, 'shipnum':len(badships), 'Ships':badships})
 
 @staff_member_required
 def kgb_kill(request):
