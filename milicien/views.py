@@ -760,7 +760,7 @@ def kgb(request):
             badships.append(ship)
 
 
-    return render(request,'kgb.html', {'num':len(names), 'names':names, 'shipnum':len(badships), 'Ships':badships})
+    return render(request,'kgb.html', {'nums':namelist[101], 'names':names, 'shipnum':len(badships), 'Ships':badships})
 
 @staff_member_required
 def kgb_kill(request):
