@@ -576,7 +576,7 @@ def getship(request):
     request.user.profile.save()
     newship=shipCode.objects.create(shipClass=shiptype, uid=request.user.profile.uid,cdkey='not released')
     newship.save()
-    newship.cdkey=str(Web3.toInt(Web3.soliditySha3(['uint256', 'uint256', 'uint256'], [newship.shipClass, newship.id, 958]))%958958)
+    newship.cdkey=str(Web3.toInt(Web3.soliditySha3(['uint256', 'uint256', 'uint256'], [newship.shipClass, newship.id, 958]))%99958958)
     newship.save()
     dic['success'] = True
     dic['msg'] = '成功'
@@ -662,8 +662,7 @@ def update(request,code):
             _s.save()
 
 
-        version.value = 3
-        version.save()
+
         return render(request,'index.html', {'NumForShow': 417})
 
 @login_required(login_url='/login/') #活动入口
@@ -734,7 +733,7 @@ def AddShip(request):
         return HttpResponse(jstr, content_type='application/json')
     newship=shipCode.objects.create(shipClass=shiptype, uid=uid,cdkey='not released')
     newship.save()
-    newship.cdkey=str(Web3.toInt(Web3.soliditySha3(['uint256', 'uint256', 'uint256'], [newship.shipClass, newship.id, 958]))%958958)
+    newship.cdkey=str(Web3.toInt(Web3.soliditySha3(['uint256', 'uint256', 'uint256'], [newship.shipClass, newship.id, 958]))%99958958)
     newship.save()
     dic['msg'] = '成功'
     dic['success'] = True
@@ -775,6 +774,8 @@ def kgb(request):
     badships=[]
 
     for i in names:
+        if i==101:
+            continue
         for ship in shipCode.objects.filter(uid=i):
             badships.append(ship)
 
@@ -803,6 +804,11 @@ def kgb_kill(request):
     badships=[]
 
     for i in names:
+        if i==101:
+            continue
+        temp = Profile.objects.get(uid=i)
+        temp.ships = '55555'
+        temp.save()
         for ship in shipCode.objects.filter(uid=i):
             ship.cdkey = 'Nauty boy'
             ship.save()
