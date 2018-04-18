@@ -749,8 +749,10 @@ def kgb(request):
                     names.append(int(usr.first_name))
         except:
             continue
-
-
+    n1=[]
+    for i in namelist:
+        if namelist[i] >= 10:
+            n1.append(i)
     badships=[]
 
     for i in names:
