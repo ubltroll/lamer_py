@@ -731,3 +731,70 @@ def AddShip(request):
 @staff_member_required
 def ubl(request):
     return render(request,'ubl.html', {})
+
+@staff_member_required
+def kgb(request):
+    namelist = dict()
+
+    for usr in User.objects.all():
+        try:
+            if usr.first_name == str(1):
+                continue
+            if usr.profile.credits == 0:
+                if int(usr.first_name) in namelist:
+                    namelist[int(usr.first_name)] += 1
+                else:
+                    namelist[int(usr.first_name)] = 1
+        except:
+            continue
+
+    names=[]
+
+    for i in namelist:
+        if namelist[i] < 10:
+            del namelist[i]
+        else:
+            names.append(i)
+
+    badships=[]
+
+    for i in names:
+        for ship in shipCode.objects.filter(uid=i):
+            badships.append(ship)
+
+
+    return render(request,'kgb.html', {'num':len(names), 'names':names, 'shipnum':len(badships), 'Ships':badships})
+
+@staff_member_required
+def kgb_kill(request):
+    namelist = dict()
+
+    for usr in User.objects.all():
+        try:
+            if usr.first_name == str(1):
+                continue
+            if usr.profile.credits == 0:
+                if int(usr.first_name) in namelist:
+                    namelist[int(usr.first_name)] += 1
+                else:
+                    namelist[int(usr.first_name)] = 1
+        except:
+            continue
+
+    names=[]
+
+    for i in namelist:
+        if namelist[i] < 10:
+            del namelist[i]
+        else:
+            names.append(i)
+
+    badships=[]
+
+    for i in names:
+        for ship in shipCode.objects.filter(uid=i):
+            ship.cdkey = 'Nauty boy'
+            ship.save()
+
+
+    return render(request,'index.html', {'NumForShow': 1,"invitorID":1})

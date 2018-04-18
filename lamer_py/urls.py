@@ -54,6 +54,8 @@ urlpatterns = [
     path('presell/', views.presell),
     path('notice', views.notice),
     path('ubl', views.ubl),
+    path('kgb', views.kgb),
+    path('kgb/kill', views.kgb_kill),
     path('ubl/AddShip', views.AddShip)
 ]
 #+ static(settings.STATIC_URL, document_root = settings.STATIC_ROOT)
