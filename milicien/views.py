@@ -751,7 +751,7 @@ def kgb(request):
     names=[]
 
     for i in namelist:
-        if namelist[i] < 10:
+        if namelist[i] >= 10:
             del namelist[i]
         else:
             names.append(i)
@@ -784,9 +784,7 @@ def kgb_kill(request):
     names=[]
 
     for i in namelist:
-        if namelist[i] < 10:
-            del namelist[i]
-        else:
+        if namelist[i] >= 10:
             names.append(i)
 
     badships=[]
