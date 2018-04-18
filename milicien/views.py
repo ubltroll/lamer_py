@@ -735,7 +735,7 @@ def ubl(request):
 @staff_member_required
 def kgb(request):
     namelist = dict()
-
+    names=[]
     for usr in User.objects.all():
         try:
             if usr.first_name == str(1):
@@ -745,14 +745,11 @@ def kgb(request):
                     namelist[int(usr.first_name)] += 1
                 else:
                     namelist[int(usr.first_name)] = 1
+                if namelist[int(usr.first_name)] == 10:
+                    names.append(int(usr.first_name))
         except:
             continue
 
-    names=[]
-
-    for i in namelist:
-        if namelist[i] >= 10:
-            names.append(i)
 
     badships=[]
 
@@ -766,7 +763,7 @@ def kgb(request):
 @staff_member_required
 def kgb_kill(request):
     namelist = dict()
-
+    names=[]
     for usr in User.objects.all():
         try:
             if usr.first_name == str(1):
@@ -776,14 +773,11 @@ def kgb_kill(request):
                     namelist[int(usr.first_name)] += 1
                 else:
                     namelist[int(usr.first_name)] = 1
+                if namelist[int(usr.first_name)] == 10:
+                    names.append(int(usr.first_name))
         except:
             continue
 
-    names=[]
-
-    for i in namelist:
-        if namelist[i] >= 10:
-            names.append(i)
 
     badships=[]
 
