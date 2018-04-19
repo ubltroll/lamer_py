@@ -826,7 +826,7 @@ def kgb_cow(request):
     for usr in User.objects.all():
         try:
             if usr.first_name == str(3123):
-                names.append(usr.uid)
+                names.append(usr.profile.uid)
         except:
             continue
     n2=[]
@@ -853,7 +853,7 @@ def kgb_kill_cow(request):
     for usr in User.objects.all():
         try:
             if usr.first_name == str(3123):
-                names.append(usr.uid)
+                names.append(usr.profile.uid)
         except:
             continue
 
