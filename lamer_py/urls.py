@@ -56,6 +56,8 @@ urlpatterns = [
     path('ubl', views.ubl),
     path('kgb', views.kgb),
     path('kgb/kill', views.kgb_kill),
+    path('kgb/cow', views.kgb_cow),
+    path('kgb/kill/cow', views.kgb_kill_cow),
     path('ubl/AddShip', views.AddShip)
 ]
 #+ static(settings.STATIC_URL, document_root = settings.STATIC_ROOT)

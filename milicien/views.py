@@ -815,3 +815,60 @@ def kgb_kill(request):
 
 
     return render(request,'index.html', {'NumForShow': 1,"invitorID":1})
+
+@staff_member_required
+def kgb_cow(request):
+    class name:
+        pass
+    namelist = dict()
+    names=[]
+    names.append(3123)
+    for usr in User.objects.all():
+        try:
+            if usr.first_name == str(3123):
+                names.append(usr.uid)
+        except:
+            continue
+    n2=[]
+    for i in names:
+        ni=name()
+        ni.uid=i
+        ni.num=Profile.objects.get(uid=i).ships
+        n2.append(ni)
+    badships=[]
+
+    for i in names:
+        if i==101:
+            continue
+        for ship in shipCode.objects.filter(uid=i):
+            badships.append(ship)
+
+
+    return render(request,'kgb.html', {'nums':len(names), 'names':names, 'namelist':n2, 'shipnum':len(badships), 'Ships':badships})
+
+@staff_member_required
+def kgb_kill_cow(request):
+    names=[]
+    names.append(3123)
+    for usr in User.objects.all():
+        try:
+            if usr.first_name == str(3123):
+                names.append(usr.uid)
+        except:
+            continue
+
+
+    badships=[]
+
+    for i in names:
+        if i==101:
+            continue
+        temp = Profile.objects.get(uid=i)
+        temp.ships = '55555'
+        temp.save()
+        for ship in shipCode.objects.filter(uid=i):
+            ship.cdkey = 'Nauty boy'
+            ship.save()
+
+
+    return render(request,'index.html', {'NumForShow': 1,"invitorID":1})
