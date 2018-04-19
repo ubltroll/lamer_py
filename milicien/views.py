@@ -849,14 +849,68 @@ def kgb_cow(request):
 @staff_member_required
 def kgb_kill_cow(request):
     names=[]
-    names.append(3123)
+ whitelist=[
+"slt8020",
+"snv7907",
+"soa1826",
+"sph1576",
+"spp2488",
+"spp9137",
+"sqa4802",
+"sqj7317",
+"sqr3053",
+"sqs6226",
+"sqt7962",
+"sra4320",
+"srg3809",
+"srh8525",
+"srj2519",
+"ssb5498",
+"ssj2940",
+"ssk0773",
+"ssw3607",
+"sta5038",
+"sta6470",
+"stb3666",
+"sti8312",
+"stn6306",
+"stu9396",
+"stv0363",
+"sua5900",
+"sub1085",
+"svr5558",
+"svw6700",
+"sxo6254",
+"sxp0700",
+"syr6192",
+"szf2007",
+"szk2263",
+"szz6938",
+"tah4033",
+"taj0391",
+"tak1113",
+"tam6422",
+"rpx7499",
+"rqb4696",
+"rqc8550",
+"o5z700",
+"f5r958",
+"e2z831",
+"w7i853",
+"n6h641",
+"g0w582",
+"e9w465",
+
+    ]    
     for usr in User.objects.all():
         try:
+            if usr.username in whitelist:
+                continue
             if usr.first_name == str(3123):
                 names.append(usr.profile.uid)
         except:
             continue
-
+   
 
     badships=[]
 
@@ -871,4 +925,4 @@ def kgb_kill_cow(request):
             ship.save()
 
 
-    return render(request,'index.html', {'NumForShow': 1,"invitorID":1})
+    return render(request,'index.html', {'NumForShow': len(names),"invitorID":1})
