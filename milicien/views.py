@@ -561,6 +561,11 @@ def getship(request):
     temp = request.user.profile.ships
     temp = list(temp)
 
+    if int(temp[shiptype])==5:
+        dic['msg'] = '账号异常，请联系客服'
+        jstr = json.dumps(dic)
+        return HttpResponse(jstr, content_type='application/json')
+
     if int(temp[shiptype])!=0:
         dic['msg'] = '该类型战舰已达到兑换上限，请兑换其他级别的战舰'
         jstr = json.dumps(dic)
