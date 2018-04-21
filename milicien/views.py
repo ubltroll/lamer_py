@@ -890,3 +890,88 @@ def kgb_kill_cow(request):
 
 
     return render(request,'index.html', {'NumForShow': len(names),"invitorID":1})
+
+    @staff_member_required
+def kgb_2(request):
+    class name:
+        pass
+    namelist = dict()
+    names=[
+    2344,
+    1399,
+    3446,
+    888,
+    209,
+    2924,
+    2992,
+    ]
+    for usr in User.objects.all():
+        try:
+            if int(usr.first_name) in names:
+                names.append(usr.profile.uid)
+        except:
+            continue
+    n2=[]
+    for i in names:
+        ni=name()
+        ni.uid=i
+        ni.num=Profile.objects.get(uid=i).ships
+        n2.append(ni)
+    badships=[]
+
+    for i in names:
+        if i==101:
+            continue
+        for ship in shipCode.objects.filter(uid=i):
+            badships.append(ship)
+
+
+    return render(request,'kgb.html', {'nums':len(names), 'names':names, 'namelist':n2, 'shipnum':len(badships), 'Ships':badships})
+
+@staff_member_required
+def kgb_kill_cow(request):
+    names=[
+    2344,
+    1399,
+    3446,
+    888,
+    209,
+    2924,
+    2992,
+    ]
+    whitelist=[
+        "slt8020",
+        "snv7907",
+        "soa1826",
+        "sph1576",
+        "spp2488",
+        "spp9137",
+        "sqa4802",
+        "sqj7317",
+        "sqr3053",
+        "sqs6226",
+    ]    
+    for usr in User.objects.all():
+        try:
+            if usr.username in whitelist:
+                continue
+            if int(usr.first_name) in names:
+                names.append(usr.profile.uid)
+        except:
+            continue
+   
+
+    badships=[]
+
+    for i in names:
+        if i==101:
+            continue
+        temp = Profile.objects.get(uid=i)
+        temp.ships = '55555'
+        temp.save()
+        for ship in shipCode.objects.filter(uid=i):
+            ship.cdkey = 'Nauty boy'
+            ship.save()
+
+
+    return render(request,'index.html', {'NumForShow': len(names),"invitorID":1})
