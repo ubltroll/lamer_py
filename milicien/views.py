@@ -891,7 +891,7 @@ def kgb_kill_cow(request):
 
     return render(request,'index.html', {'NumForShow': len(names),"invitorID":1})
 
-    @staff_member_required
+@staff_member_required
 def kgb_2(request):
     class name:
         pass
