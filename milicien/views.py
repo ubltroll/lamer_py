@@ -929,7 +929,7 @@ def kgb_2(request):
     return render(request,'kgb.html', {'nums':len(names), 'names':names, 'namelist':n2, 'shipnum':len(badships), 'Ships':badships})
 
 @staff_member_required
-def kgb_kill_cow(request):
+def kgb_kill_2(request):
     names=[
     2344,
     1399,
