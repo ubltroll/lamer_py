@@ -581,7 +581,7 @@ def getship(request):
     request.user.profile.save()
     newship=shipCode.objects.create(shipClass=shiptype, uid=request.user.profile.uid,cdkey='not released')
     newship.save()
-    newship.cdkey=str(Web3.toInt(Web3.soliditySha3(['uint256', 'uint256', 'uint256'], [newship.shipClass, newship.id, 958]))%99958958)
+    newship.cdkey=str(Web3.toInt(Web3.soliditySha3(['uint256', 'uint256', 'uint256'], [newship.shipClass, newship.id, 666]))%99958958)
     newship.save()
     dic['success'] = True
     dic['msg'] = '成功'
@@ -662,7 +662,7 @@ def update(request,code):
         for _s in _ships:
             if _s.cdkey == 'Nauty boy':
                 continue
-            _s.cdkey=str(Web3.toInt(Web3.soliditySha3(['uint256', 'uint256', 'uint256'], [_s.shipClass, _s.id, 958]))%99958958)
+            _s.cdkey=str(Web3.toInt(Web3.soliditySha3(['uint256', 'uint256', 'uint256'], [_s.shipClass, _s.id, 666]))%99958958)
 
             _s.save()
 
@@ -738,7 +738,7 @@ def AddShip(request):
         return HttpResponse(jstr, content_type='application/json')
     newship=shipCode.objects.create(shipClass=shiptype, uid=uid,cdkey='not released')
     newship.save()
-    newship.cdkey=str(Web3.toInt(Web3.soliditySha3(['uint256', 'uint256', 'uint256'], [newship.shipClass, newship.id, 958]))%99958958)
+    newship.cdkey=str(Web3.toInt(Web3.soliditySha3(['uint256', 'uint256', 'uint256'], [newship.shipClass, newship.id, 666]))%99958958)
     newship.save()
     dic['msg'] = '成功'
     dic['success'] = True
