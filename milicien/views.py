@@ -468,9 +468,9 @@ def checkin(request):
     dic={}
     if (datetime.datetime.now() - request.user.profile.cooldowntime.replace(tzinfo=None)).days :
         dic['success'] = True
-        dic['msg'] = '签到成功,战舰碎片+3'
+        dic['msg'] = '碎片获得系统已关闭'
         request.user.profile.cooldowntime=datetime.datetime.now().replace(tzinfo=None)
-        request.user.profile.credits+=3
+        #request.user.profile.credits+=3
         request.user.profile.friend1=0
         request.user.profile.friend2=0
         request.user.profile.assistance=3
@@ -509,14 +509,14 @@ def assist(request):
         dic['msg'] = '目标用户今日不能获得更多的碎片了'
     else:
         dic['success'] = True
-        dic['msg'] = '成功'
+        dic['msg'] = '碎片获得系统已关闭'
         if request.user.profile.assistance == 0 :
             dic['success'] = False
             dic['msg'] = '次数用尽'
         else:
             assistancedata=assistance.objects.create(fromuser=request.user.profile.uid+5800,touser=friend)
             assistancedata.save()
-            friendprofile.credits+=3   #一次3点
+            #friendprofile.credits+=3   #一次3点
             friendprofile.today+=3
             friendprofile.save()
             if request.user.profile.assistance == 3:
